@@ -22,6 +22,53 @@
 
 </head>
 <body>
+  <!-- ========== 吃豆人开屏动画 (Pacman Opening) ========== -->
+<div class="opening-screen" id="opening-screen">
+  <div class="game-container" id="game-container">
+    <!-- 迷宫与豆豆 -->
+    <div class="maze-bg" id="maze-bg"></div>
+    <div class="dots-path" id="dots-path">
+      <div class="dot" style="left: 20%;"></div>
+      <div class="dot" style="left: 40%;"></div>
+      <div class="dot" style="left: 60%;"></div>
+      <div class="dot" style="left: 80%;"></div>
+    </div>
+    
+    <!-- 幽灵本体 -->
+    <div class="ghost" id="ghost">
+      <div class="ghost-body"></div>
+      <div class="ghost-eyes">
+        <div class="ghost-eye"></div>
+        <div class="ghost-eye"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 屏幕闪烁白光 -->
+  <div class="screen-flash" id="screen-flash"></div>
+
+  <!-- 阶段一文字：404 故障 -->
+  <div class="opening-text hidden" id="text-404">
+    <div class="text-404">404</div>
+    <div class="text-not-found">NOT FOUND!!</div>
+  </div>
+  
+  <!-- 阶段二文字：手写涂鸦 -->
+  <div class="opening-text hidden" id="text-wait">
+    <div class="text-wait">wait, really?.....</div>
+  </div>
+  
+  <!-- 阶段三文字：哥特降临 + 酸性中文 -->
+  <div class="opening-text hidden" id="text-welcome">
+    <div class="text-welcome">WELCOME TO<br>SHADOW'S PLACE!!</div>
+    <div class="text-subtitle">玉元一的噪音档案</div>
+  </div>
+
+  <!-- 跳过按钮 -->
+  <button class="skip-button" id="skip-btn">Skip [Esc]</button>
+</div>
+<!-- =================================================== -->
+
   
  <!-- ========== BLOCK: Pacman Ghost Opening START ========== -->
 <div class="opening-screen">
