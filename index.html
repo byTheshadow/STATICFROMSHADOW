@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="STATIC FROM SHADOW — 玉元一的噪音档案，角色卡、美化作品、预设与插件展示">
+  <meta name="keywords" content="角色卡,美化,预设,插件,作品集">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="STATIC FROM SHADOW — 玉元一的噪音档案">
+  <meta property="og:description" content="Vol.∞ / Transmission Archive">
+  <meta property="og:type" content="website">
+  
+  <title>STATIC FROM SHADOW — 玉元一的噪音档案</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caveat:wght@400;700&family=IBM+Plex+Mono:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="style/main.css">
+  <link rel="stylesheet" href="style/noise.css">
+</head>
+<body>
+  
+  <!-- ========== BLOCK: Noise Overlay START ========== -->
+  <canvas id="noise-canvas" class="noise-overlay"></canvas>
+  <!-- ========== BLOCK: Noise Overlay END ========== -->
+
+  <!-- ========== BLOCK: Navigation START ========== -->
+  <nav class="main-nav">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <span class="logo-main">STATIC FROM SHADOW</span>
+        <span class="logo-sub">Vol.∞</span>
+      </div>
+      <ul class="nav-menu">
+        <li><a href="#about" class="nav-link active" data-section="about">ABOUT</a></li>
+        <li><a href="#characters" class="nav-link" data-section="characters">角色档案</a></li>
+        <li><a href="#beautify" class="nav-link" data-section="beautify">美化拼贴</a></li>
+        <li><a href="#presets" class="nav-link" data-section="presets">预设磁带</a></li>
+        <li><a href="#plugins" class="nav-link" data-section="plugins">插件黑胶</a></li>
+        <li><a href="#projects" class="nav-link" data-section="projects">传送终端</a></li>
+      </ul>
+      <button class="nav-toggle" aria-label="切换菜单">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+  <!-- ========== BLOCK: Navigation END ========== -->
+
+  <!-- ========== BLOCK: Main Content START ========== -->
+  <main class="main-content">
+    
+    <!-- ========== SECTION: About Me START ========== -->
+    <section id="about" class="content-section active">
+      <div class="about-hero">
+        <div class="hero-bg-container">
+          <div class="hero-bg" style="background-image: url('assets/images/hero-bg.jpg')"></div>
+        </div>
+        <div class="hero-content">
+          <h1 class="hero-title">
+            <span class="title-glitch" data-text="STATIC FROM SHADOW">STATIC FROM SHADOW</span>
+          </h1>
+          <p class="hero-subtitle typewriter">玉元一的噪音档案 / Transmission Archive / since ????</p>
+          <div class="hero-intro" id="about-intro">
+            <!-- 内容由 loader.js 从 about.json 加载 -->
+          </div>
+          <div class="tape-decoration">
+            <div class="tape-cassette">
+              <div class="tape-reel left"></div>
+              <div class="tape-reel right"></div>
+            </div>
+          </div>
+        </div>
+        <div class="scroll-indicator">
+          <span>SCROLL</span>
+          <div class="scroll-line"></div>
+        </div>
+      </div>
+    </section>
+    <!-- ========== SECTION: About Me END ========== -->
+
+    <!-- ========== SECTION: Characters START ========== -->
+    <section id="characters" class="content-section">
+      <div class="section-container">
+        <header class="section-header">
+          <h2 class="section-title">
+            <span class="title-number">01</span>
+            <span class="title-text">角色档案馆</span>
+            <span class="title-en">CHARACTER ARCHIVE</span>
+          </h2>
+          <div class="section-filter" id="character-filter">
+            <!-- 标签过滤器由 JS 动态生成 -->
+          </div>
+        </header>
+        <div class="character-grid" id="character-grid">
+          <!-- 角色卡由 loader.js 从 characters.json 加载 -->
+        </div>
+      </div>
+    </section>
+    <!-- ========== SECTION: Characters END ========== -->
+
+    <!-- ========== SECTION: Beautify START ========== -->
+    <section id="beautify" class="content-section">
+      <div class="section-container">
+        <header class="section-header">
+          <h2 class="section-title">
+            <span class="title-number">02</span>
+            <span class="title-text">美化拼贴墙</span>
+            <span class="title-en">BEAUTIFY COLLAGE</span>
+          </h2>
+          <div class="section-controls">
+            <div class="section-filter" id="beautify-filter">
+              <!-- 标签过滤器 -->
+            </div>
+            <div class="section-sort">
+              <button class="sort-btn active" data-sort="latest">最新</button>
+              <button class="sort-btn" data-sort="oldest">最旧</button>
+              <button class="sort-btn" data-sort="random">随机</button>
+            </div>
+          </div>
+        </header>
+        <div class="beautify-masonry" id="beautify-grid">
+          <!-- 美化图由 loader.js 从 beautify.json 加载 -->
+        </div>
+      </div>
+    </section>
+    <!-- ========== SECTION: Beautify END ========== -->
+
+    <!-- ========== SECTION: Presets START ========== -->
+    <section id="presets" class="content-section">
+      <div class="section-container">
+        <header class="section-header">
+          <h2 class="section-title">
+            <span class="title-number">03</span>
+            <span class="title-text">预设磁带柜</span>
+            <span class="title-en">PRESET TAPES</span>
+          </h2>
+        </header>
+        <div class="preset-tabs" id="preset-tabs">
+          <!-- 预设标签页由 JS 生成 -->
+        </div>
+        <div class="preset-content" id="preset-content">
+          <!-- 预设内容由 loader.js 从 presets.json 加载 -->
+        </div>
+      </div>
+    </section>
+    <!-- ========== SECTION: Presets END ========== -->
+
+    <!-- ========== SECTION: Plugins START ========== -->
+    <section id="plugins" class="content-section">
+      <div class="section-container">
+        <header class="section-header">
+          <h2 class="section-title">
+            <span class="title-number">04</span>
+            <span class="title-text">插件黑胶架</span>
+            <span class="title-en">PLUGIN VINYLS</span>
+          </h2>
+        </header>
+        <div class="vinyl-shelf" id="vinyl-shelf">
+          <!-- 插件黑胶由 loader.js 从 plugins.json 加载 -->
+        </div>
+      </div>
+    </section>
+    <!-- ========== SECTION: Plugins END ========== -->
+
+    <!-- ========== SECTION: Projects START ========== -->
+    <section id="projects" class="content-section">
+      <div class="section-container">
+        <header class="section-header">
+          <h2 class="section-title">
+            <span class="title-number">05</span>
+            <span class="title-text">传送终端</span>
+            <span class="title-en">TRANSMISSION TERMINAL</span>
+          </h2>
+        </header>
+        <div class="terminal-window">
+          <div class="terminal-header">
+            <span class="terminal-dot red"></span>
+            <span class="terminal-dot yellow"></span>
+            <span class="terminal-dot green"></span>
+            <span class="terminal-title">vibe_coding_projects.sh</span>
+          </div>
+          <div class="terminal-body" id="terminal-body">
+            <!-- 项目链接由 loader.js 从 projects.json 加载 -->
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- ========== SECTION: Projects END ========== -->
+
+  </main>
+  <!-- ========== BLOCK: Main Content END ========== -->
+
+  <!-- ========== BLOCK: Lightbox Modal START ========== -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" aria-label="关闭">&times;</button>
+    <div class="lightbox-content">
+      <img src="" alt="" id="lightbox-img">
+      <div class="lightbox-info" id="lightbox-info"></div>
+    </div>
+    <button class="lightbox-nav prev" aria-label="上一张">‹</button>
+    <button class="lightbox-nav next" aria-label="下一张">›</button>
+  </div>
+  <!-- ========== BLOCK: Lightbox Modal END ========== -->
+
+  <!-- Scripts -->
+  <script src="js/loader.js"></script>
+  <script src="js/main.js"></script>
+  
+</body>
+</html>
