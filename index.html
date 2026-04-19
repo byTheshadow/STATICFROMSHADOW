@@ -4,29 +4,23 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="STATIC FROM SHADOW — 玉元一的噪音档案，角色卡、美化作品、预设与插件展示">
-  <meta name="keywords" content="角色卡,美化,预设,插件,作品集">
-  
-  <!-- Open Graph -->
-  <meta property="og:title" content="STATIC FROM SHADOW — 玉元一的噪音档案">
-  <meta property="og:description" content="Vol.∞ / Transmission Archive">
-  <meta property="og:type" content="website">
-  
   <title>STATIC FROM SHADOW — 玉元一的噪音档案</title>
   
-  <!-- Google Fonts -->
+  <!-- ========== BLOCK: Google Fonts START ========== -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Shadows+Into+Light+Two&family=Zhi+Mang+Xing&family=Ma+Shan+Zheng&family=Courier+Prime:wght@400;700&family=Special+Elite&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&family=Ma+Shan+Zheng&family=Long+Cang&family=Special+Elite&family=IBM+Plex+Mono:wght@300;400;500;600&family=Rock+Salt&family=VT323&family=Bungee+Inline&display=swap" rel="stylesheet">
+  <!-- ========== BLOCK: Google Fonts END ========== -->
   
   <!-- Stylesheets -->
   <link rel="stylesheet" href="style/main.css">
-  <link rel="stylesheet" href="style/noise.css">
+  <link rel="stylesheet" href="style/animations.css">
 </head>
-<body>
+<body class="home-page">
   
-  <!-- ========== BLOCK: Noise Overlay START ========== -->
-  <canvas id="noise-canvas" class="noise-overlay"></canvas>
-  <!-- ========== BLOCK: Noise Overlay END ========== -->
+  <!-- ========== BLOCK: Noise Loader START ========== -->
+  <div id="loader" class="noise-overlay active"></div>
+  <!-- ========== BLOCK: Noise Loader END ========== -->
 
   <!-- ========== BLOCK: Navigation START ========== -->
   <nav class="main-nav">
@@ -36,7 +30,7 @@
         <span class="logo-sub">Vol.∞</span>
       </div>
       <ul class="nav-menu">
-        <li><a href="#about" class="nav-link active" data-section="about">ABOUT</a></li>
+        <li><a href="#home" class="nav-link active" data-section="home">HOME</a></li>
         <li><a href="#characters" class="nav-link" data-section="characters">角色档案</a></li>
         <li><a href="#beautify" class="nav-link" data-section="beautify">美化拼贴</a></li>
         <li><a href="#presets" class="nav-link" data-section="presets">预设磁带</a></li>
@@ -55,86 +49,89 @@
   <!-- ========== BLOCK: Main Content START ========== -->
   <main class="main-content">
     
-    <!-- ========== SECTION: About Me START ========== -->
-    <section id="about" class="content-section active">
-      <div class="livehouse-scene">
-        <!-- 背景大图 -->
-        <div class="stage-bg" id="stage-bg"></div>
-        
-        <!-- 舞台灯光效果 -->
-        <div class="stage-lights">
-          <div class="spotlight spot-1"></div>
-          <div class="spotlight spot-2"></div>
-          <div class="spotlight spot-3"></div>
+    <!-- ========== SECTION: Home (Livehouse) START ========== -->
+    <section id="home" class="content-section active hero-section">
+      
+      <!-- ========== BLOCK: Background Image Container START ========== -->
+      <div class="background-image-container">
+        <img src="assets/images/hero-bg.jpg" alt="Livehouse 现场" class="hero-bg-img">
+        <div class="vignette-overlay"></div>
+        <div class="grain-overlay"></div>
+        <div class="light-sweep-effect"></div>
+      </div>
+      <!-- ========== BLOCK: Background Image Container END ========== -->
+
+      <!-- ========== BLOCK: Miaomiao Printer START ========== -->
+      <div class="miaomiao-printer">
+        <div class="printer-body">
+          <div class="printer-top"></div>
+          <div class="printer-slot"></div>
         </div>
-        
-        <!-- 黑胶唱片装饰 -->
-        <div class="vinyl-decoration">
-          <div class="vinyl-disc">
-            <div class="vinyl-label">
-              <span class="vinyl-text">STATIC</span>
-              <span class="vinyl-text">FROM</span>
-              <span class="vinyl-text">SHADOW</span>
-            </div>
-            <div class="vinyl-grooves"></div>
+        <div class="printer-paper-wrapper">
+          <div id="printer-paper" class="printer-paper">
+            <!-- 内容由 printer.js 动态生成 -->
           </div>
-        </div>
-        
-        <!-- 喵喵机打印机 -->
-        <div class="thermal-printer">
-          <div class="printer-body">
-            <div class="printer-header">
-              <div class="printer-led"></div>
-              <span class="printer-brand">MEMOBIRD</span>
-            </div>
-            <div class="printer-paper">
-              <div class="paper-content" id="printer-output">
-                <div class="print-line">━━━━━━━━━━━━━━━━━━</div>
-                <div class="print-line delay-1">WELCOME TO</div>
-                <div class="print-line delay-2">玉元一的噪音档案</div>
-                <div class="print-line delay-3">━━━━━━━━━━━━━━━━━━</div>
-                <div class="print-line delay-4">[ TRANSMISSION ARCHIVE ]</div>
-                <div class="print-line delay-5">Vol.∞ // since ????</div>
-                <div class="print-line delay-6">━━━━━━━━━━━━━━━━━━</div>
-                <div class="print-line delay-7" id="dynamic-intro">
-                  <!-- 动态加载的自我介绍 -->
-                </div>
-              </div>
-            </div>
-            <div class="printer-slot"></div>
-          </div>
-        </div>
-        
-        <!-- 磁带装饰 -->
-        <div class="cassette-decoration">
-          <div class="cassette-tape">
-            <div class="cassette-label">
-              <span class="cassette-title">SIDE A</span>
-              <span class="cassette-artist">玉元一</span>
-            </div>
-            <div class="cassette-window">
-              <div class="tape-reel left-reel"></div>
-              <div class="tape-reel right-reel"></div>
-              <div class="tape-strip"></div>
-            </div>
-          </div>
-        </div>
-        
-        <!-- 滚动提示 -->
-        <div class="scroll-hint">
-          <span class="scroll-text">SCROLL TO EXPLORE</span>
-          <div class="scroll-arrow">↓</div>
         </div>
       </div>
+      <!-- ========== BLOCK: Miaomiao Printer END ========== -->
+
+      <!-- ========== BLOCK: Decorations START ========== -->
+      <div class="decorations">
+        
+        <!-- 黑胶唱片 -->
+        <div id="vinyl-player" class="vinyl-container" title="点击播放氛围音">
+          <div class="vinyl-record">
+            <div class="vinyl-label">
+              <span class="vinyl-text">STATIC</span>
+            </div>
+          </div>
+          <div class="vinyl-arm"></div>
+          <audio id="ambient-noise" src="assets/audio/ambient.mp3" loop></audio>
+        </div>
+
+        <!-- 散落的磁带 -->
+        <div class="cassette cassette-1">
+          <div class="cassette-body">
+            <div class="cassette-reel left"></div>
+            <div class="cassette-reel right"></div>
+          </div>
+        </div>
+        
+        <div class="cassette cassette-2">
+          <div class="cassette-body">
+            <div class="cassette-reel left"></div>
+            <div class="cassette-reel right"></div>
+          </div>
+        </div>
+
+        <!-- 手写便签/票根 -->
+        <div class="sticker sticker-ticket">
+          <p class="handwriting-font">ADMIT ONE</p>
+          <p class="ticket-date">2024.04.19</p>
+        </div>
+
+        <div class="sticker sticker-note">
+          <p class="handwriting-font">噪音档案</p>
+        </div>
+
+      </div>
+      <!-- ========== BLOCK: Decorations END ========== -->
+
+      <!-- 滚动指示器 -->
+      <div class="scroll-indicator">
+        <span>EXPLORE</span>
+        <div class="scroll-line"></div>
+      </div>
+
     </section>
-    <!-- ========== SECTION: About Me END ========== -->
+    <!-- ========== SECTION: Home (Livehouse) END ========== -->
 
     <!-- ========== SECTION: Characters START ========== -->
     <section id="characters" class="content-section">
       <div class="section-container">
         <header class="section-header">
           <h2 class="section-title">
-            <span class="title-stamp">01</span>
+            <span class="title-number">01</span>
             <span class="title-text">角色档案馆</span>
             <span class="title-en">CHARACTER ARCHIVE</span>
           </h2>
@@ -154,14 +151,12 @@
       <div class="section-container">
         <header class="section-header">
           <h2 class="section-title">
-            <span class="title-stamp">02</span>
+            <span class="title-number">02</span>
             <span class="title-text">美化拼贴墙</span>
             <span class="title-en">BEAUTIFY COLLAGE</span>
           </h2>
           <div class="section-controls">
-            <div class="section-filter" id="beautify-filter">
-              <!-- 标签过滤器 -->
-            </div>
+            <div class="section-filter" id="beautify-filter"></div>
             <div class="section-sort">
               <button class="sort-btn active" data-sort="latest">最新</button>
               <button class="sort-btn" data-sort="oldest">最旧</button>
@@ -170,7 +165,7 @@
           </div>
         </header>
         <div class="beautify-masonry" id="beautify-grid">
-          <!-- 美化图由 loader.js 从 beautify.json 加载 -->
+          <!-- 美化图由 loader.js 加载 -->
         </div>
       </div>
     </section>
@@ -181,17 +176,13 @@
       <div class="section-container">
         <header class="section-header">
           <h2 class="section-title">
-            <span class="title-stamp">03</span>
+            <span class="title-number">03</span>
             <span class="title-text">预设磁带柜</span>
             <span class="title-en">PRESET TAPES</span>
           </h2>
         </header>
-        <div class="preset-tabs" id="preset-tabs">
-          <!-- 预设标签页由 JS 生成 -->
-        </div>
-        <div class="preset-content" id="preset-content">
-          <!-- 预设内容由 loader.js 从 presets.json 加载 -->
-        </div>
+        <div class="preset-tabs" id="preset-tabs"></div>
+        <div class="preset-content" id="preset-content"></div>
       </div>
     </section>
     <!-- ========== SECTION: Presets END ========== -->
@@ -201,14 +192,12 @@
       <div class="section-container">
         <header class="section-header">
           <h2 class="section-title">
-            <span class="title-stamp">04</span>
+            <span class="title-number">04</span>
             <span class="title-text">插件黑胶架</span>
             <span class="title-en">PLUGIN VINYLS</span>
           </h2>
         </header>
-        <div class="vinyl-shelf" id="vinyl-shelf">
-          <!-- 插件黑胶由 loader.js 从 plugins.json 加载 -->
-        </div>
+        <div class="vinyl-shelf" id="vinyl-shelf"></div>
       </div>
     </section>
     <!-- ========== SECTION: Plugins END ========== -->
@@ -218,7 +207,7 @@
       <div class="section-container">
         <header class="section-header">
           <h2 class="section-title">
-            <span class="title-stamp">05</span>
+            <span class="title-number">05</span>
             <span class="title-text">传送终端</span>
             <span class="title-en">TRANSMISSION TERMINAL</span>
           </h2>
@@ -230,9 +219,7 @@
             <span class="terminal-dot green"></span>
             <span class="terminal-title">vibe_coding_projects.sh</span>
           </div>
-          <div class="terminal-body" id="terminal-body">
-            <!-- 项目链接由 loader.js 从 projects.json 加载 -->
-          </div>
+          <div class="terminal-body" id="terminal-body"></div>
         </div>
       </div>
     </section>
@@ -254,9 +241,9 @@
   <!-- ========== BLOCK: Lightbox Modal END ========== -->
 
   <!-- Scripts -->
+  <script src="js/printer.js"></script>
   <script src="js/loader.js"></script>
   <script src="js/main.js"></script>
   
 </body>
 </html>
-
