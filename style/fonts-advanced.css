@@ -1,0 +1,51 @@
+/* ========== BLOCK: Advanced Gothic Fonts START ========== */
+@import url('https://fonts.googleapis.com/css2?family=Creepster&family=Nosifer&family=Butcherman&family=UnifrakturMaguntia&family=IM+Fell+English:ital@0;1&display=swap');
+
+:root {
+  /* 哥特体字体层级 */
+  --font-gothic-horror: 'Nosifer', cursive;           /* 滴血哥特 - 最强烈 */
+  --font-gothic-creepy: 'Creepster', cursive;         /* 恐怖哥特 - 标题用 */
+  --font-gothic-bold: 'Butcherman', cursive;          /* 粗犷哥特 - 强调用 */
+  --font-gothic-classic: 'UnifrakturMaguntia', serif; /* 古典哥特 - 装饰用 */
+  --font-gothic-elegant: 'IM Fell English', serif;    /* 优雅哥特 - 正文用 */
+  
+  /* 重新定义字体使用场景 */
+  --font-hero-title: 'Nosifer', 'Creepster', cursive;           /* 主标题 */
+  --font-section-title: 'Creepster', 'ZCOOL KuaiLe', sans-serif; /* 板块标题 */
+  --font-card-title: 'Butcherman', 'Ma Shan Zheng', sans-serif;  /* 卡片标题 */
+  --font-body-elegant: 'IM Fell English', 'Long Cang', serif;    /* 优雅正文 */
+  --font-decorative: 'UnifrakturMaguntia', 'Rock Salt', cursive; /* 装饰文字 */
+}
+
+/* 应用到具体元素 */
+.hero-title,
+.logo-main {
+  font-family: var(--font-hero-title);
+  text-shadow: 
+    2px 2px 0 var(--red-main),
+    4px 4px 0 var(--red-dim),
+    6px 6px 10px rgba(0, 0, 0, 0.8);
+}
+
+.section-title .title-text {
+  font-family: var(--font-section-title);
+}
+
+.card-title,
+.character-name,
+.preset-name {
+  font-family: var(--font-card-title);
+}
+
+.about-intro,
+.description-text {
+  font-family: var(--font-body-elegant);
+  font-size: 1.125rem;
+  line-height: 1.8;
+}
+
+.decorative-text,
+.sticker-text {
+  font-family: var(--font-decorative);
+}
+/* ========== BLOCK: Advanced Gothic Fonts END ========== */
