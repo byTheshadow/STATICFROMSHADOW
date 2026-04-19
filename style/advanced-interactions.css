@@ -1,6 +1,6 @@
 /* ========== BLOCK: Advanced Interactions START ========== */
 
-/* 自定义光标 */
+/* ========== BLOCK: Custom Cursor START ========== */
 body {
   cursor: none;
 }
@@ -9,19 +9,16 @@ body {
   position: fixed;
   width: 20px;
   height: 20px;
-  border: 2px solid var(--red-main);
+  border: 2px solid var(--red-bright, #ff4757);
   border-radius: 50%;
   pointer-events: none;
-  z-index: 9999;
-  transition: transform 0.15s ease, opacity 0.15s ease;
-  opacity: 0;
+  z-index: 999999;
+  transform: translate(-50%, -50%);
+  transition: width 0.2s, height 0.2s, border-color 0.2s;
+  mix-blend-mode: difference;
 }
 
-.custom-cursor.active {
-  opacity: 1;
-}
-
-.custom-cursor::before {
+.custom-cursor::after {
   content: '';
   position: absolute;
   top: 50%;
@@ -29,36 +26,26 @@ body {
   transform: translate(-50%, -50%);
   width: 4px;
   height: 4px;
-  background: var(--red-bright);
+  background: var(--red-bright, #ff4757);
   border-radius: 50%;
 }
 
-/* 光标悬停在可点击元素上 */
-body.cursor-hover .custom-cursor {
-  transform: scale(1.5);
-  border-color: var(--red-bright);
-  background: rgba(142, 27, 27, 0.2);
+.custom-cursor.hover {
+  width: 40px;
+  height: 40px;
+  border-color: var(--text-primary, #d7d7d7);
 }
 
-/* 鼠标粒子轨迹 */
-.cursor-trail {
-  position: fixed;
-  width: 6px;
-  height: 6px;
-  background: var(--red-main);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9998;
-  opacity: 0.6;
-  animation: trailFade 0.8s ease-out forwards;
+/* 开屏动画期间显示正常鼠标 */
+.opening-screen ~ .custom-cursor {
+  display: none;
 }
 
-@keyframes trailFade {
-  to {
-    opacity: 0;
-    transform: scale(0);
-  }
+body:has(.opening-screen) {
+  cursor: default;
 }
+/* ========== BLOCK: Custom Cursor END ========== */
+
 
 /* 页面切换撕裂效果 */
 .page-transition {
