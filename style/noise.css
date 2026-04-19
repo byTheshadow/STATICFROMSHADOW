@@ -24,16 +24,16 @@ body::before {
   pointer-events: none;
   background: repeating-linear-gradient(
     0deg,
-    rgba(0, 0, 0, 0.1) 0px,
+    rgba(0, 0, 0, 0.15) 0px,
     transparent 1px,
     transparent 2px,
-    rgba(0, 0, 0, 0.1) 3px
+    rgba(0, 0, 0, 0.15) 3px
   );
-  animation: scanline 8s linear infinite;
-  opacity: 0.05;
+  animation: scanlineMove 8s linear infinite;
+  opacity: 0.08;
 }
 
-@keyframes scanline {
+@keyframes scanlineMove {
   0% { transform: translateY(0); }
   100% { transform: translateY(100%); }
 }
@@ -42,6 +42,7 @@ body::before {
 /* ========== BLOCK: Glitch Text Effect START ========== */
 .title-glitch {
   position: relative;
+  display: inline-block;
 }
 
 .title-glitch::before,
@@ -56,31 +57,33 @@ body::before {
 }
 
 .title-glitch::before {
-  color: var(--blood-main);
-  animation: glitch-1 2.5s infinite;
+  color: var(--red-main);
+  animation: glitch-1 3s infinite;
   clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+  text-shadow: 2px 0 var(--red-main);
 }
 
 .title-glitch::after {
   color: var(--purple-main);
-  animation: glitch-2 2.5s infinite;
+  animation: glitch-2 3s infinite;
   clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+  text-shadow: -2px 0 var(--purple-main);
 }
 
 @keyframes glitch-1 {
   0%, 100% { transform: translate(0); }
-  20% { transform: translate(-2px, 2px); }
-  40% { transform: translate(-2px, -2px); }
-  60% { transform: translate(2px, 2px); }
-  80% { transform: translate(2px, -2px); }
+  20% { transform: translate(-3px, 3px); }
+  40% { transform: translate(-3px, -3px); }
+  60% { transform: translate(3px, 3px); }
+  80% { transform: translate(3px, -3px); }
 }
 
 @keyframes glitch-2 {
   0%, 100% { transform: translate(0); }
-  20% { transform: translate(2px, -2px); }
-  40% { transform: translate(2px, 2px); }
-  60% { transform: translate(-2px, -2px); }
-  80% { transform: translate(-2px, 2px); }
+  20% { transform: translate(3px, -3px); }
+  40% { transform: translate(3px, 3px); }
+  60% { transform: translate(-3px, -3px); }
+  80% { transform: translate(-3px, 3px); }
 }
 /* ========== BLOCK: Glitch Text Effect END ========== */
 
@@ -97,12 +100,25 @@ body::before {
 
 .static-transition.active {
   opacity: 1;
-  animation: staticFlash 0.5s;
+  animation: staticFlash 0.6s;
 }
 
 @keyframes staticFlash {
   0%, 100% { opacity: 0; }
-  50% { opacity: 1; }
+  10%, 30%, 50%, 70%, 90% { opacity: 1; background: var(--bg-base); }
+  20%, 40%, 60%, 80% { opacity: 0.5; background: var(--red-dim); }
 }
 /* ========== BLOCK: Static Transition Effect END ========== */
 
+/* ========== BLOCK: VHS Distortion START ========== */
+@keyframes vhsDistortion {
+  0%, 100% { transform: translateX(0) scaleX(1); }
+  25% { transform: translateX(2px) scaleX(1.01); }
+  50% { transform: translateX(-2px) scaleX(0.99); }
+  75% { transform: translateX(1px) scaleX(1.005); }
+}
+
+.vhs-effect {
+  animation: vhsDistortion 0.3s infinite;
+}
+/* ========== BLOCK: VHS Distortion END ========== */
