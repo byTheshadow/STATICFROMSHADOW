@@ -16,7 +16,7 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caveat:wght@400;700&family=IBM+Plex+Mono:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Shadows+Into+Light+Two&family=Zhi+Mang+Xing&family=Ma+Shan+Zheng&family=Courier+Prime:wght@400;700&family=Special+Elite&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
   
   <!-- Stylesheets -->
   <link rel="stylesheet" href="style/main.css">
@@ -57,28 +57,73 @@
     
     <!-- ========== SECTION: About Me START ========== -->
     <section id="about" class="content-section active">
-      <div class="about-hero">
-        <div class="hero-bg-container">
-          <div class="hero-bg" style="background-image: url('assets/images/hero-bg.jpg')"></div>
+      <div class="livehouse-scene">
+        <!-- 背景大图 -->
+        <div class="stage-bg" id="stage-bg"></div>
+        
+        <!-- 舞台灯光效果 -->
+        <div class="stage-lights">
+          <div class="spotlight spot-1"></div>
+          <div class="spotlight spot-2"></div>
+          <div class="spotlight spot-3"></div>
         </div>
-        <div class="hero-content">
-          <h1 class="hero-title">
-            <span class="title-glitch" data-text="STATIC FROM SHADOW">STATIC FROM SHADOW</span>
-          </h1>
-          <p class="hero-subtitle typewriter">玉元一的噪音档案 / Transmission Archive / since ????</p>
-          <div class="hero-intro" id="about-intro">
-            <!-- 内容由 loader.js 从 about.json 加载 -->
+        
+        <!-- 黑胶唱片装饰 -->
+        <div class="vinyl-decoration">
+          <div class="vinyl-disc">
+            <div class="vinyl-label">
+              <span class="vinyl-text">STATIC</span>
+              <span class="vinyl-text">FROM</span>
+              <span class="vinyl-text">SHADOW</span>
+            </div>
+            <div class="vinyl-grooves"></div>
           </div>
-          <div class="tape-decoration">
-            <div class="tape-cassette">
-              <div class="tape-reel left"></div>
-              <div class="tape-reel right"></div>
+        </div>
+        
+        <!-- 喵喵机打印机 -->
+        <div class="thermal-printer">
+          <div class="printer-body">
+            <div class="printer-header">
+              <div class="printer-led"></div>
+              <span class="printer-brand">MEMOBIRD</span>
+            </div>
+            <div class="printer-paper">
+              <div class="paper-content" id="printer-output">
+                <div class="print-line">━━━━━━━━━━━━━━━━━━</div>
+                <div class="print-line delay-1">WELCOME TO</div>
+                <div class="print-line delay-2">玉元一的噪音档案</div>
+                <div class="print-line delay-3">━━━━━━━━━━━━━━━━━━</div>
+                <div class="print-line delay-4">[ TRANSMISSION ARCHIVE ]</div>
+                <div class="print-line delay-5">Vol.∞ // since ????</div>
+                <div class="print-line delay-6">━━━━━━━━━━━━━━━━━━</div>
+                <div class="print-line delay-7" id="dynamic-intro">
+                  <!-- 动态加载的自我介绍 -->
+                </div>
+              </div>
+            </div>
+            <div class="printer-slot"></div>
+          </div>
+        </div>
+        
+        <!-- 磁带装饰 -->
+        <div class="cassette-decoration">
+          <div class="cassette-tape">
+            <div class="cassette-label">
+              <span class="cassette-title">SIDE A</span>
+              <span class="cassette-artist">玉元一</span>
+            </div>
+            <div class="cassette-window">
+              <div class="tape-reel left-reel"></div>
+              <div class="tape-reel right-reel"></div>
+              <div class="tape-strip"></div>
             </div>
           </div>
         </div>
-        <div class="scroll-indicator">
-          <span>SCROLL</span>
-          <div class="scroll-line"></div>
+        
+        <!-- 滚动提示 -->
+        <div class="scroll-hint">
+          <span class="scroll-text">SCROLL TO EXPLORE</span>
+          <div class="scroll-arrow">↓</div>
         </div>
       </div>
     </section>
@@ -89,7 +134,7 @@
       <div class="section-container">
         <header class="section-header">
           <h2 class="section-title">
-            <span class="title-number">01</span>
+            <span class="title-stamp">01</span>
             <span class="title-text">角色档案馆</span>
             <span class="title-en">CHARACTER ARCHIVE</span>
           </h2>
@@ -109,7 +154,7 @@
       <div class="section-container">
         <header class="section-header">
           <h2 class="section-title">
-            <span class="title-number">02</span>
+            <span class="title-stamp">02</span>
             <span class="title-text">美化拼贴墙</span>
             <span class="title-en">BEAUTIFY COLLAGE</span>
           </h2>
@@ -136,7 +181,7 @@
       <div class="section-container">
         <header class="section-header">
           <h2 class="section-title">
-            <span class="title-number">03</span>
+            <span class="title-stamp">03</span>
             <span class="title-text">预设磁带柜</span>
             <span class="title-en">PRESET TAPES</span>
           </h2>
@@ -156,7 +201,7 @@
       <div class="section-container">
         <header class="section-header">
           <h2 class="section-title">
-            <span class="title-number">04</span>
+            <span class="title-stamp">04</span>
             <span class="title-text">插件黑胶架</span>
             <span class="title-en">PLUGIN VINYLS</span>
           </h2>
@@ -173,7 +218,7 @@
       <div class="section-container">
         <header class="section-header">
           <h2 class="section-title">
-            <span class="title-number">05</span>
+            <span class="title-stamp">05</span>
             <span class="title-text">传送终端</span>
             <span class="title-en">TRANSMISSION TERMINAL</span>
           </h2>
@@ -214,3 +259,4 @@
   
 </body>
 </html>
+
