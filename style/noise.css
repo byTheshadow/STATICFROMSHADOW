@@ -1,0 +1,108 @@
+/* ========== BLOCK: Noise Overlay START ========== */
+.noise-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: var(--noise-opacity);
+  mix-blend-mode: overlay;
+}
+/* ========== BLOCK: Noise Overlay END ========== */
+
+/* ========== BLOCK: Scanline Effect START ========== */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9998;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.1) 0px,
+    transparent 1px,
+    transparent 2px,
+    rgba(0, 0, 0, 0.1) 3px
+  );
+  animation: scanline 8s linear infinite;
+  opacity: 0.05;
+}
+
+@keyframes scanline {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(100%); }
+}
+/* ========== BLOCK: Scanline Effect END ========== */
+
+/* ========== BLOCK: Glitch Text Effect START ========== */
+.title-glitch {
+  position: relative;
+}
+
+.title-glitch::before,
+.title-glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.8;
+}
+
+.title-glitch::before {
+  color: var(--blood-main);
+  animation: glitch-1 2.5s infinite;
+  clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+}
+
+.title-glitch::after {
+  color: var(--purple-main);
+  animation: glitch-2 2.5s infinite;
+  clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+}
+
+@keyframes glitch-1 {
+  0%, 100% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+}
+
+@keyframes glitch-2 {
+  0%, 100% { transform: translate(0); }
+  20% { transform: translate(2px, -2px); }
+  40% { transform: translate(2px, 2px); }
+  60% { transform: translate(-2px, -2px); }
+  80% { transform: translate(-2px, 2px); }
+}
+/* ========== BLOCK: Glitch Text Effect END ========== */
+
+/* ========== BLOCK: Static Transition Effect START ========== */
+.static-transition {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: var(--bg-base);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.static-transition.active {
+  opacity: 1;
+  animation: staticFlash 0.5s;
+}
+
+@keyframes staticFlash {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
+}
+/* ========== BLOCK: Static Transition Effect END ========== */
+
