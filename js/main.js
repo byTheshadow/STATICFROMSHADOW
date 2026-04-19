@@ -163,5 +163,29 @@ function navigateLightbox(direction) {
 // 上一张/下一张按钮
 document.querySelector('.lightbox-nav.prev')?.addEventListener('click', () => navigateLightbox(-1));
 document.querySelector('.lightbox-nav.next')?.addEventListener('click', () => navigateLightbox(1));
+// ========== 自定义鼠标 ==========
+const cursor = document.querySelector('.custom-cursor');
+
+if (cursor) {
+  document.addEventListener('mousemove', (e) => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+  });
+
+  // 鼠标悬停效果
+  document.querySelectorAll('a, button, .nav-link, .character-card, .vinyl-record').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+  });
+}
+
+// 开屏动画完成后启用自定义鼠标
+document.addEventListener('openingComplete', () => {
+  if (cursor) {
+    cursor.style.display = 'block';
+  }
+  document.body.style.cursor = 'none';
+});
+
 
 // ========== BLOCK: Lightbox Functionality END ==========
