@@ -1,46 +1,42 @@
-/* ========== BLOCK: CSS Variables (Gemini方案配色) START ========== */
+/* ========== BLOCK: CSS Variables & Design Tokens (Gemini方案) START ========== */
 :root {
   /* 黑红主色系 */
   --bg-base: #101010;
   --bg-surface: #1a0f0f;
   --bg-elevated: #2a1515;
   
-  --text-primary: #D7D7D7;
-  --text-secondary: #999999;
-  --text-tertiary: #666666;
+  --text-primary: #D7D7D7;      /* 旧纸白 */
+  --text-secondary: #b89080;    /* 暖灰 */
+  --text-tertiary: #6a5050;     /* 深灰红 */
   
-  /* 血红/酒红 */
+  /* 血红系 */
   --red-dim: #3a1010;
-  --red-main: #8E1B1B;
-  --red-bright: #B82E2E;
+  --red-main: #8E1B1B;          /* 主红色 */
+  --red-bright: #ff6b6b;
   
   /* 暗紫点缀 */
   --purple-dim: #3B2A4F;
-  --purple-main: #5A4570;
-  --purple-bright: #7A5A90;
+  --purple-main: #7a5a7a;
+  --purple-bright: #9a7a9a;
   
   /* 烟灰 */
   --ash-main: #4A4A4A;
-  --ash-bright: #6A6A6A;
+  --ash-bright: #6a6a6a;
   
-  /* 边框 */
   --border-default: rgba(215, 215, 215, 0.1);
   --border-strong: rgba(215, 215, 215, 0.3);
   
-  /* 毛玻璃 */
-  --glass-bg: rgba(26, 15, 15, 0.8);
+  --glass-bg: rgba(26, 15, 15, 0.7);
   --glass-border: rgba(215, 215, 215, 0.15);
   
-  /* 字体 */
-  --font-title-cn: 'ZCOOL KuaiLe', 'Ma Shan Zheng', sans-serif;
-  --font-handwrite-cn: 'Ma Shan Zheng', 'Long Cang', cursive;
-  --font-body-cn: 'Long Cang', sans-serif;
+  --noise-opacity: 0.04;
   
-  --font-title-en: 'Bungee Inline', 'Special Elite', cursive;
-  --font-typewriter: 'Special Elite', monospace;
-  --font-mono: 'IBM Plex Mono', monospace;
-  --font-handwrite-en: 'Rock Salt', cursive;
-  --font-terminal: 'VT323', monospace;
+  /* 字体 (Gemini推荐) */
+  --font-title-cn: 'ZCOOL KuaiLe', 'Ma Shan Zheng', sans-serif;
+  --font-handwrite-cn: 'Long Cang', 'Ma Shan Zheng', cursive;
+  --font-title-en: 'Special Elite', 'Courier New', monospace;
+  --font-body-en: 'IBM Plex Mono', 'Courier New', monospace;
+  --font-deco: 'Rock Salt', cursive;
   
   /* 间距 */
   --space-xs: 0.25rem;
@@ -60,14 +56,14 @@
   /* 动画 */
   --transition-fast: 0.15s ease;
   --transition-base: 0.3s ease;
-  --transition-slow: 0.8s ease;
+  --transition-slow: 0.5s ease;
   
   /* 阴影 */
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.5);
   --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.6);
   --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.7);
 }
-/* ========== BLOCK: CSS Variables END ========== */
+/* ========== BLOCK: CSS Variables & Design Tokens END ========== */
 
 /* ========== BLOCK: Global Reset START ========== */
 * {
@@ -82,13 +78,12 @@ html {
 }
 
 body {
-  font-family: var(--font-mono);
+  font-family: var(--font-body-en);
   background: var(--bg-base);
   color: var(--text-primary);
   line-height: 1.6;
   overflow-x: hidden;
   min-height: 100vh;
-  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"><circle cx="10" cy="10" r="8" fill="none" stroke="%238E1B1B" stroke-width="2"/><circle cx="10" cy="10" r="2" fill="%238E1B1B"/></svg>') 10 10, auto;
 }
 
 img {
@@ -100,7 +95,6 @@ img {
 a {
   color: inherit;
   text-decoration: none;
-  cursor: pointer;
 }
 
 button {
@@ -116,30 +110,31 @@ ul, ol {
 
 ::selection {
   background: var(--red-main);
-  color: var(--text-primary);
+  color: var(--bg-base);
 }
 /* ========== BLOCK: Global Reset END ========== */
 
-/* ========== BLOCK: Noise Loader START ========== */
-.noise-overlay {
+/* ========== BLOCK: Google Fonts Import START ========== */
+@import url('https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&family=Ma+Shan+Zheng&family=Long+Cang&family=Special+Elite&family=IBM+Plex+Mono:wght@300;400;500;600&family=Rock+Salt&display=swap');
+/* ========== BLOCK: Google Fonts Import END ========== */
+
+/* ========== BLOCK: Noise Loader Overlay START ========== */
+#loader {
   position: fixed;
   inset: 0;
   z-index: 10000;
-  background: 
-    url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" /></filter><rect width="100%" height="100%" filter="url(%23noise)"/></svg>'),
-    var(--bg-base);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.5s;
-}
-
-.noise-overlay.active {
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" /></filter><rect width="100%" height="100%" filter="url(%23noise)" opacity="1"/></svg>') var(--bg-base);
   opacity: 1;
-  pointer-events: all;
+  transition: opacity 1s ease-out;
+  pointer-events: none;
 }
-/* ========== BLOCK: Noise Loader END ========== */
 
-/* ========== BLOCK: Navigation START ========== */
+#loader.hidden {
+  opacity: 0;
+}
+/* ========== BLOCK: Noise Loader Overlay END ========== */
+
+/* ========== BLOCK: Navigation (更新配色) START ========== */
 .main-nav {
   position: fixed;
   top: 0;
@@ -167,16 +162,16 @@ ul, ol {
 }
 
 .logo-main {
-  font-family: var(--font-typewriter);
-  font-size: 1.25rem;
+  font-family: var(--font-title-en);
+  font-size: 1.5rem;
   letter-spacing: 0.1em;
   color: var(--text-primary);
 }
 
 .logo-sub {
-  font-family: var(--font-handwrite-en);
-  font-size: 0.75rem;
-  color: var(--red-main);
+  font-family: var(--font-handwrite-cn);
+  font-size: 1rem;
+  color: var(--text-secondary);
   margin-left: var(--space-xs);
 }
 
@@ -186,13 +181,13 @@ ul, ol {
 }
 
 .nav-link {
-  font-family: var(--font-mono);
   font-size: 0.875rem;
   color: var(--text-secondary);
   transition: color var(--transition-base);
   position: relative;
   padding: var(--space-xs) 0;
   letter-spacing: 0.05em;
+  font-family: var(--font-title-cn);
 }
 
 .nav-link::after {
@@ -232,18 +227,24 @@ ul, ol {
 
 /* ========== BLOCK: Main Content Layout START ========== */
 .main-content {
-  padding-top: 70px;
+  padding-top: 80px;
 }
 
 .content-section {
   display: none;
-  min-height: calc(100vh - 70px);
+  min-height: calc(100vh - 80px);
   opacity: 0;
+  animation: fadeIn var(--transition-slow) forwards;
 }
 
 .content-section.active {
   display: block;
-  animation: fadeInBlur var(--transition-slow) forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
 }
 
 .section-container {
@@ -252,378 +253,6 @@ ul, ol {
   padding: var(--space-3xl) var(--space-xl);
 }
 /* ========== BLOCK: Main Content Layout END ========== */
-
-/* ========== BLOCK: Hero Section (Livehouse) START ========== */
-.hero-section {
-  position: relative;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-
-.background-image-container {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  animation: cameraShake 15s infinite;
-}
-
-.hero-bg-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: brightness(0.4) contrast(1.1);
-}
-
-.vignette-overlay {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at center, transparent 0%, rgba(16, 16, 16, 0.8) 100%);
-}
-
-.grain-overlay {
-  position: absolute;
-  inset: 0;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300"><filter id="grain"><feTurbulence baseFrequency="0.9" numOctaves="3"/></filter><rect width="100%" height="100%" filter="url(%23grain)" opacity="0.4"/></svg>');
-  opacity: 0.15;
-  mix-blend-mode: overlay;
-}
-
-.light-sweep-effect {
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(
-    45deg,
-    transparent 30%,
-    rgba(142, 27, 27, 0.1) 50%,
-    transparent 70%
-  );
-  animation: lightSweep 8s infinite;
-}
-/* ========== BLOCK: Hero Section END ========== */
-
-/* ========== BLOCK: Miaomiao Printer START ========== */
-.miaomiao-printer {
-  position: relative;
-  z-index: 10;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0;
-}
-
-.printer-body {
-  width: 320px;
-  height: 100px;
-  background: linear-gradient(180deg, #2a2a2a 0%, #1a1a1a 100%);
-  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-  border: 2px solid var(--ash-main);
-  position: relative;
-  box-shadow: var(--shadow-lg);
-}
-
-.printer-top {
-  position: absolute;
-  top: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 60px;
-  height: 8px;
-  background: var(--red-dim);
-  border-radius: var(--radius-sm);
-}
-
-.printer-slot {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 280px;
-  height: 4px;
-  background: #000;
-  border-radius: 2px;
-}
-
-.printer-paper-wrapper {
-  overflow: hidden;
-  max-height: 400px;
-  width: 280px;
-}
-
-.printer-paper {
-  background: var(--text-primary);
-  color: var(--bg-base);
-  font-family: var(--font-typewriter);
-  width: 100%;
-  height: 0;
-  transition: height 1s ease-in-out;
-  padding: var(--space-md);
-  box-sizing: border-box;
-  box-shadow: var(--shadow-md);
-  border-left: 1px dashed var(--ash-main);
-  border-right: 1px dashed var(--ash-main);
-}
-
-.printer-paper p {
-  opacity: 0;
-  overflow: hidden;
-  white-space: nowrap;
-  border-right: 0.15em solid var(--bg-base);
-  margin: var(--space-sm) 0;
-  font-size: 1.125rem;
-  letter-spacing: 0.05em;
-}
-
-.printer-paper p.typing {
-  animation: typing 1.5s steps(30, end), 
-             blinkCaret 0.75s step-end infinite;
-  animation-fill-mode: forwards;
-}
-
-.printer-paper p.typed {
-  opacity: 1;
-  border-right: none;
-  width: 100%;
-}
-/* ========== BLOCK: Miaomiao Printer END ========== */
-
-/* ========== BLOCK: Decorations START ========== */
-.decorations {
-  position: absolute;
-  inset: 0;
-  z-index: 5;
-  pointer-events: none;
-}
-
-.decorations > * {
-  pointer-events: all;
-}
-
-/* 黑胶唱片 */
-.vinyl-container {
-  position: absolute;
-  bottom: 10%;
-  left: 8%;
-  width: 180px;
-  height: 180px;
-  cursor: pointer;
-  transition: transform var(--transition-base);
-}
-
-.vinyl-container:hover {
-  transform: scale(1.05);
-}
-
-.vinyl-record {
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle, #1a1a1a 0%, #0a0a0a 60%, #1a1a1a 100%);
-  border-radius: 50%;
-  position: relative;
-  box-shadow: var(--shadow-lg);
-  animation: vinylSpin 3s linear infinite;
-}
-
-.vinyl-record::before {
-  content: '';
-  position: absolute;
-  inset: 20%;
-  background: radial-gradient(circle, var(--red-dim) 0%, transparent 70%);
-  border-radius: 50%;
-}
-
-.vinyl-record::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 30px;
-  height: 30px;
-  background: var(--bg-base);
-  border-radius: 50%;
-  border: 2px solid var(--ash-main);
-}
-
-.vinyl-label {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 80px;
-  height: 80px;
-  background: var(--red-main);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-typewriter);
-  font-size: 0.75rem;
-  color: var(--text-primary);
-  letter-spacing: 0.1em;
-}
-
-.vinyl-container:hover .vinyl-record {
-  animation-play-state: paused;
-}
-
-.vinyl-arm {
-  position: absolute;
-  top: 10%;
-  right: -20%;
-  width: 80px;
-  height: 4px;
-  background: var(--ash-bright);
-  border-radius: 2px;
-  transform-origin: right center;
-  transform: rotate(-25deg);
-  box-shadow: var(--shadow-sm);
-}
-
-.vinyl-arm::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 12px;
-  height: 12px;
-  background: var(--red-main);
-  border-radius: 50%;
-}
-
-/* 磁带 */
-.cassette {
-  position: absolute;
-  width: 120px;
-  height: 80px;
-}
-
-.cassette-1 {
-  top: 15%;
-  right: 10%;
-  transform: rotate(8deg);
-}
-
-.cassette-2 {
-  bottom: 20%;
-  right: 15%;
-  transform: rotate(-12deg);
-}
-
-.cassette-body {
-  width: 100%;
-  height: 100%;
-  background: var(--bg-elevated);
-  border: 2px solid var(--ash-main);
-  border-radius: var(--radius-sm);
-  position: relative;
-  box-shadow: var(--shadow-md);
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: var(--space-md);
-}
-
-.cassette-reel {
-  width: 28px;
-  height: 28px;
-  border: 2px solid var(--red-main);
-  border-radius: 50%;
-  position: relative;
-  animation: cassetteRotate 4s linear infinite;
-}
-
-.cassette-reel::before {
-  content: '';
-  position: absolute;
-  inset: 6px;
-  border: 1px solid var(--red-dim);
-  border-radius: 50%;
-}
-
-.cassette-reel::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 8px;
-  height: 8px;
-  background: var(--red-main);
-  border-radius: 50%;
-}
-
-/* 便签贴纸 */
-.sticker {
-  position: absolute;
-  padding: var(--space-sm) var(--space-md);
-  background: var(--text-primary);
-  border: 1px solid var(--ash-main);
-  box-shadow: var(--shadow-md);
-  transform: rotate(-3deg);
-}
-
-.sticker-ticket {
-  top: 20%;
-  left: 12%;
-  width: 140px;
-  border-left: 3px dashed var(--red-main);
-}
-
-.sticker-note {
-  bottom: 15%;
-  left: 15%;
-  transform: rotate(5deg);
-  background: #fffacd;
-}
-
-.handwriting-font {
-  font-family: var(--font-handwrite-cn);
-  font-size: 1.25rem;
-  color: var(--bg-base);
-  text-align: center;
-  margin: 0;
-}
-
-.ticket-date {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--ash-main);
-  text-align: center;
-  margin-top: var(--space-xs);
-}
-/* ========== BLOCK: Decorations END ========== */
-
-/* ========== BLOCK: Scroll Indicator START ========== */
-.scroll-indicator {
-  position: absolute;
-  bottom: var(--space-2xl);
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 10;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-sm);
-  color: var(--text-tertiary);
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  letter-spacing: 0.2em;
-}
-
-.scroll-line {
-  width: 1px;
-  height: 40px;
-  background: linear-gradient(to bottom, var(--red-main), transparent);
-  animation: scrollPulse 2s infinite;
-}
-/* ========== BLOCK: Scroll Indicator END ========== */
 
 /* ========== BLOCK: Section Headers START ========== */
 .section-header {
@@ -635,7 +264,6 @@ ul, ol {
   align-items: baseline;
   gap: var(--space-md);
   margin-bottom: var(--space-lg);
-  flex-wrap: wrap;
 }
 
 .title-number {
@@ -653,13 +281,85 @@ ul, ol {
 }
 
 .title-en {
-  font-family: var(--font-typewriter);
+  font-family: var(--font-title-en);
   font-size: 0.875rem;
   color: var(--text-tertiary);
   letter-spacing: 0.2em;
   margin-left: auto;
 }
 /* ========== BLOCK: Section Headers END ========== */
+
+/* ========== BLOCK: Hero Section (Livehouse风格) START ========== */
+.hero-section {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.background-image-container {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.background-image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.4) contrast(1.3);
+  animation: cameraShake 15s infinite;
+}
+
+/* 暗角效果 */
+.vignette-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, transparent 0%, rgba(16, 16, 16, 0.8) 100%);
+  pointer-events: none;
+}
+
+/* 颗粒感 */
+.grain-overlay {
+  position: absolute;
+  inset: 0;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300"><filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" /></filter><rect width="100%" height="100%" filter="url(%23grain)" opacity="0.4"/></svg>');
+  opacity: 0.15;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+
+/* 灯光扫过效果 */
+.light-sweep-effect {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(142, 27, 27, 0.1) 50%,
+    transparent 70%
+  );
+  animation: lightSweep 8s infinite;
+  pointer-events: none;
+}
+
+@keyframes cameraShake {
+  0%, 100% { transform: translate(0, 0) rotate(0); }
+  25% { transform: translate(-1px, 2px) rotate(-0.1deg); }
+  50% { transform: translate(2px, -1px) rotate(0.2deg); }
+  75% { transform: translate(-1px, 1px) rotate(-0.1deg); }
+}
+
+@keyframes lightSweep {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(50%, 50%) rotate(360deg); }
+}
+/* ========== BLOCK: Hero Section END ========== */
 
 /* ========== BLOCK: Filter & Controls START ========== */
 .section-filter {
@@ -673,17 +373,16 @@ ul, ol {
   background: var(--bg-surface);
   border: 1px solid var(--border-default);
   border-radius: var(--radius-md);
-  font-family: var(--font-mono);
   font-size: 0.875rem;
   color: var(--text-secondary);
   transition: all var(--transition-base);
   cursor: pointer;
+  font-family: var(--font-title-cn);
 }
 
 .filter-tag:hover {
   border-color: var(--red-main);
   color: var(--red-bright);
-  transform: translateY(-2px);
 }
 
 .filter-tag.active {
@@ -710,10 +409,10 @@ ul, ol {
   background: var(--bg-surface);
   border: 1px solid var(--border-default);
   border-radius: var(--radius-md);
-  font-family: var(--font-mono);
   font-size: 0.875rem;
   color: var(--text-secondary);
   transition: all var(--transition-base);
+  font-family: var(--font-title-cn);
 }
 
 .sort-btn:hover {
@@ -727,260 +426,6 @@ ul, ol {
   color: var(--red-bright);
 }
 /* ========== BLOCK: Filter & Controls END ========== */
-
-/* ========== BLOCK: Character Grid START ========== */
-.character-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: var(--space-xl);
-}
-
-.character-card {
-  background: var(--bg-surface);
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  transition: all var(--transition-base);
-  cursor: pointer;
-  opacity: 0;
-  transform: translateY(50px) rotate(-5deg);
-}
-
-.character-card.in-view {
-  opacity: 1;
-  transform: translateY(0) rotate(2deg);
-}
-
-.character-card:hover {
-  transform: translateY(-8px) rotate(0deg);
-  border-color: var(--red-main);
-  box-shadow: var(--shadow-lg);
-}
-
-.character-card-img {
-  width: 100%;
-  height: 320px;
-  object-fit: cover;
-  filter: grayscale(0.3) contrast(1.1);
-  transition: filter var(--transition-base);
-}
-
-.character-card:hover .character-card-img {
-  filter: grayscale(0) contrast(1.2);
-}
-
-.character-card-content {
-  padding: var(--space-lg);
-}
-
-.character-card-title {
-  font-family: var(--font-title-cn);
-  font-size: 1.5rem;
-  color: var(--text-primary);
-  margin-bottom: var(--space-sm);
-}
-
-.character-card-desc {
-  font-family: var(--font-body-cn);
-  font-size: 0.875rem;
-  color: var(--text-secondary);
-  line-height: 1.6;
-  margin-bottom: var(--space-md);
-}
-
-.character-card-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-xs);
-}
-
-.character-tag {
-  padding: var(--space-xs) var(--space-sm);
-  background: var(--red-dim);
-  border: 1px solid var(--red-main);
-  border-radius: var(--radius-sm);
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--red-bright);
-}
-/* ========== BLOCK: Character Grid END ========== */
-
-/* ========== BLOCK: Beautify Masonry START ========== */
-.beautify-masonry {
-  column-count: 3;
-  column-gap: var(--space-lg);
-}
-
-.beautify-item {
-  break-inside: avoid;
-  margin-bottom: var(--space-lg);
-  position: relative;
-  cursor: pointer;
-  opacity: 0;
-  transform: translateY(30px) rotate(-3deg);
-  transition: all var(--transition-base);
-}
-
-.beautify-item.in-view {
-  opacity: 1;
-  transform: translateY(0) rotate(1deg);
-}
-
-.beautify-item:hover {
-  transform: translateY(-5px) rotate(0deg);
-  z-index: 10;
-}
-
-.beautify-item-img {
-  width: 100%;
-  height: auto;
-  border-radius: var(--radius-md);
-  border: 2px solid var(--border-default);
-  box-shadow: var(--shadow-md);
-  transition: all var(--transition-base);
-}
-
-.beautify-item:hover .beautify-item-img {
-  border-color: var(--red-main);
-  box-shadow: var(--shadow-lg);
-}
-
-.beautify-item-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(16, 16, 16, 0.9) 0%, transparent 50%);
-  opacity: 0;
-  transition: opacity var(--transition-base);
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: var(--space-md);
-  border-radius: var(--radius-md);
-}
-
-.beautify-item:hover .beautify-item-overlay {
-  opacity: 1;
-}
-
-.beautify-item-title {
-  font-family: var(--font-handwrite-cn);
-  font-size: 1.125rem;
-  color: var(--text-primary);
-  margin-bottom: var(--space-xs);
-}
-
-.beautify-item-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-xs);
-}
-
-.beautify-tag {
-  padding: 2px var(--space-sm);
-  background: var(--red-dim);
-  border: 1px solid var(--red-main);
-  border-radius: var(--radius-sm);
-  font-family: var(--font-mono);
-  font-size: 0.625rem;
-  color: var(--red-bright);
-}
-
-/* 胶带装饰 */
-.beautify-item::before {
-  content: '';
-  position: absolute;
-  top: -8px;
-  left: 50%;
-  transform: translateX(-50%) rotate(-2deg);
-  width: 60px;
-  height: 20px;
-  background: rgba(215, 215, 215, 0.3);
-  border: 1px solid rgba(215, 215, 215, 0.2);
-  z-index: 1;
-}
-/* ========== BLOCK: Beautify Masonry END ========== */
-
-/* ========== BLOCK: Terminal Window START ========== */
-.terminal-window {
-  background: var(--bg-base);
-  border: 2px solid var(--ash-main);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  box-shadow: var(--shadow-lg);
-}
-
-.terminal-header {
-  background: var(--bg-elevated);
-  padding: var(--space-sm) var(--space-md);
-  display: flex;
-  align-items: center;
-  gap: var(--space-sm);
-  border-bottom: 1px solid var(--ash-main);
-}
-
-.terminal-dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-}
-
-.terminal-dot.red {
-  background: #ff5f56;
-}
-
-.terminal-dot.yellow {
-  background: #ffbd2e;
-}
-
-.terminal-dot.green {
-  background: #27c93f;
-}
-
-.terminal-title {
-  font-family: var(--font-terminal);
-  font-size: 0.875rem;
-  color: var(--text-secondary);
-  margin-left: var(--space-md);
-}
-
-.terminal-body {
-  padding: var(--space-xl);
-  font-family: var(--font-terminal);
-  font-size: 1.125rem;
-  color: #27c93f;
-  min-height: 400px;
-}
-
-.terminal-line {
-  margin-bottom: var(--space-md);
-  display: flex;
-  align-items: center;
-  gap: var(--space-sm);
-}
-
-.terminal-prompt {
-  color: var(--red-main);
-}
-
-.terminal-command {
-  color: #27c93f;
-  cursor: pointer;
-  transition: color var(--transition-fast);
-}
-
-.terminal-command:hover {
-  color: #4ade80;
-  text-decoration: underline;
-}
-
-.terminal-cursor {
-  display: inline-block;
-  width: 10px;
-  height: 20px;
-  background: #27c93f;
-  animation: blinkCursor 1s infinite;
-}
-/* ========== BLOCK: Terminal Window END ========== */
 
 /* ========== BLOCK: Lightbox Modal START ========== */
 .lightbox {
@@ -1011,14 +456,12 @@ ul, ol {
   object-fit: contain;
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
-  border: 2px solid var(--red-main);
 }
 
 .lightbox-info {
   margin-top: var(--space-md);
   text-align: center;
   color: var(--text-secondary);
-  font-family: var(--font-mono);
   font-size: 0.875rem;
 }
 
@@ -1074,12 +517,6 @@ ul, ol {
 /* ========== BLOCK: Lightbox Modal END ========== */
 
 /* ========== BLOCK: Responsive Design START ========== */
-@media (max-width: 1024px) {
-  .beautify-masonry {
-    column-count: 2;
-  }
-}
-
 @media (max-width: 768px) {
   .nav-menu {
     display: none;
@@ -1104,20 +541,5 @@ ul, ol {
   .section-container {
     padding: var(--space-xl) var(--space-md);
   }
-  
-  .beautify-masonry {
-    column-count: 1;
-  }
-  
-  .vinyl-container,
-  .cassette,
-  .sticker {
-    display: none;
-  }
-  
-  .character-grid {
-    grid-template-columns: 1fr;
-  }
 }
 /* ========== BLOCK: Responsive Design END ========== */
-
