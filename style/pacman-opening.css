@@ -1,0 +1,441 @@
+/* ========== BLOCK: Pacman Ghost Opening Animation START ========== */
+
+.opening-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: #0a0a0a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  pointer-events: all;
+}
+
+.opening-screen.finished {
+  animation: screenShatter 0.8s forwards;
+}
+
+@keyframes screenShatter {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.1);
+    filter: blur(10px);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.8);
+    filter: blur(20px);
+    visibility: hidden;
+  }
+}
+
+/* 游戏容器 */
+.game-container {
+  position: relative;
+  width: 600px;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 迷宫背景 */
+.maze-bg {
+  position: absolute;
+  inset: 0;
+  opacity: 0.3;
+  background: 
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 50px,
+      var(--red-dim) 50px,
+      var(--red-dim) 52px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 50px,
+      var(--red-dim) 50px,
+      var(--red-dim) 52px
+    );
+}
+
+/* 豆豆路径 */
+.dots-path {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dot {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: var(--text-primary);
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(215, 215, 215, 0.6);
+  opacity: 1;
+  transition: opacity 0.2s;
+}
+
+.dot.eaten {
+  opacity: 0;
+  transform: scale(0);
+}
+
+/* 幽灵 */
+.ghost {
+  position: absolute;
+  width: 60px;
+  height: 70px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  animation: ghostMove 3s ease-in-out;
+  z-index: 10;
+}
+
+/* 幽灵身体 */
+.ghost-body {
+  width: 100%;
+  height: 100%;
+  background: var(--red-main);
+  border-radius: 50% 50% 0 0;
+  position: relative;
+  box-shadow: 
+    0 0 20px rgba(142, 27, 27, 0.6),
+    inset 0 -10px 20px rgba(0, 0, 0, 0.3);
+  animation: ghostFloat 1s ease-in-out infinite;
+}
+
+@keyframes ghostFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+/* 幽灵底部波浪 */
+.ghost-body::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 15px;
+  background: 
+    radial-gradient(circle at 10px 0, transparent 10px, var(--red-main) 10px, var(--red-main) 20px, transparent 20px),
+    radial-gradient(circle at 30px 0, transparent 10px, var(--red-main) 10px, var(--red-main) 20px, transparent 20px),
+    radial-gradient(circle at 50px 0, transparent 10px, var(--red-main) 10px, var(--red-main) 20px, transparent 20px);
+  background-size: 20px 15px;
+  background-position: 0 0, 20px 0, 40px 0;
+  background-repeat: repeat-x;
+}
+
+/* 幽灵眼睛 */
+.ghost-eyes {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 15px;
+}
+
+.ghost-eye {
+  width: 12px;
+  height: 16px;
+  background: #fff;
+  border-radius: 50% 50% 40% 40%;
+  position: relative;
+  animation: eyeBlink 3s infinite;
+}
+
+.ghost-eye::after {
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 8px;
+  background: #0a0a0a;
+  border-radius: 50%;
+  animation: eyeMove 2s infinite;
+}
+
+@keyframes eyeBlink {
+  0%, 96%, 100% { height: 16px; }
+  98% { height: 2px; }
+}
+
+@keyframes eyeMove {
+  0%, 100% { transform: translateX(-50%); }
+  50% { transform: translateX(-30%); }
+}
+
+/* 幽灵移动路径 */
+@keyframes ghostMove {
+  0% {
+    left: -10%;
+    top: 50%;
+  }
+  25% {
+    left: 30%;
+    top: 30%;
+  }
+  50% {
+    left: 50%;
+    top: 50%;
+  }
+  75% {
+    left: 70%;
+    top: 70%;
+  }
+  100% {
+    left: 110%;
+    top: 50%;
+  }
+}
+
+/* 幽灵转身动画 */
+.ghost.turn-around {
+  animation: ghostTurn 1s forwards;
+}
+
+@keyframes ghostTurn {
+  0% {
+    transform: translate(-50%, -50%) scaleX(1);
+  }
+  50% {
+    transform: translate(-50%, -50%) scaleX(0.2);
+  }
+  100% {
+    transform: translate(-50%, -50%) scaleX(-1);
+    left: 50%;
+    top: 50%;
+  }
+}
+
+/* 幽灵消散 */
+.ghost.dissolve {
+  animation: ghostDissolve 1.5s forwards;
+}
+
+@keyframes ghostDissolve {
+  0% {
+    opacity: 1;
+    filter: blur(0);
+  }
+  50% {
+    opacity: 0.5;
+    transform: translate(-50%, -50%) scale(1.2);
+    filter: blur(5px);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(2);
+    filter: blur(20px);
+  }
+}
+
+/* 粒子效果 */
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: var(--red-bright);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: particleFloat 2s ease-out forwards;
+}
+
+@keyframes particleFloat {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--tx), var(--ty)) scale(0);
+  }
+}
+
+/* 文字容器 */
+.opening-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  opacity: 0;
+  z-index: 20;
+}
+
+/* 404 文字 */
+.text-404 {
+  font-family: var(--font-hero-title);
+  font-size: 5rem;
+  color: var(--red-bright);
+  letter-spacing: 0.2em;
+  text-shadow: 
+    0 0 20px var(--red-main),
+    0 0 40px var(--red-main),
+    2px 2px 0 var(--red-dim);
+  margin-bottom: 1rem;
+  animation: text404Appear 0.5s forwards;
+}
+
+@keyframes text404Appear {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+    filter: blur(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+  }
+}
+
+.text-not-found {
+  font-family: var(--font-title-en);
+  font-size: 2rem;
+  color: var(--text-primary);
+  letter-spacing: 0.3em;
+  animation: textGlitchLoop 0.3s infinite;
+}
+
+@keyframes textGlitchLoop {
+  0%, 100% {
+    transform: translate(0);
+    text-shadow: 0 0 10px var(--red-main);
+  }
+  25% {
+    transform: translate(-2px, 2px);
+    text-shadow: 2px 0 var(--red-main), -2px 0 var(--purple-main);
+  }
+  75% {
+    transform: translate(2px, -2px);
+    text-shadow: -2px 0 var(--red-main), 2px 0 var(--purple-main);
+  }
+}
+
+/* Wait Really 文字 */
+.text-wait {
+  font-family: var(--font-handwrite-cn);
+  font-size: 2.5rem;
+  color: var(--text-secondary);
+  letter-spacing: 0.1em;
+  animation: textFadeIn 1s forwards;
+}
+
+@keyframes textFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Welcome 文字 */
+.text-welcome {
+  font-family: var(--font-hero-title);
+  font-size: 3.5rem;
+  color: var(--text-primary);
+  letter-spacing: 0.15em;
+  text-shadow: 
+    2px 2px 0 var(--red-main),
+    4px 4px 0 var(--red-dim),
+    0 0 30px var(--red-main);
+  animation: textWelcomeIn 1s forwards;
+  line-height: 1.4;
+}
+
+@keyframes textWelcomeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) rotate(-5deg);
+    filter: blur(10px);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.1) rotate(2deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+    filter: blur(0);
+  }
+}
+
+.text-subtitle {
+  font-family: var(--font-title-cn);
+  font-size: 1.5rem;
+  color: var(--text-secondary);
+  margin-top: 1rem;
+  animation: textFadeIn 1s 0.5s forwards;
+  opacity: 0;
+}
+
+/* 屏幕闪烁效果 */
+.screen-flash {
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 15;
+}
+
+.screen-flash.active {
+  animation: flashScreen 0.5s;
+}
+
+@keyframes flashScreen {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 0.8; }
+}
+
+/* 跳过按钮 */
+.skip-button {
+  position: absolute;
+  bottom: 5%;
+  right: 5%;
+  padding: 0.75rem 1.5rem;
+  background: rgba(142, 27, 27, 0.2);
+  border: 1px solid var(--red-main);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  font-family: var(--font-body-en);
+  font-size: 0.875rem;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  pointer-events: all;
+  transition: all 0.3s;
+  z-index: 30;
+}
+
+.skip-button:hover {
+  background: rgba(142, 27, 27, 0.5);
+  color: var(--red-bright);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(142, 27, 27, 0.4);
+}
+
+/* 隐藏状态 */
+.hidden {
+  display: none !important;
+}
+/* ========== BLOCK: Pacman Ghost Opening Animation END ========== */
