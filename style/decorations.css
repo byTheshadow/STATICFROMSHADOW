@@ -1,0 +1,345 @@
+/* ========== BLOCK: Musical Decorations (音符串和乐谱) START ========== */
+.decorations {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* 音符串容器 */
+.music-notes {
+  position: absolute;
+  display: flex;
+  gap: 20px;
+  animation: floatNotes 20s linear infinite;
+}
+
+.music-notes.top-left {
+  top: 10%;
+  left: 5%;
+  transform: rotate(-15deg);
+}
+
+.music-notes.top-right {
+  top: 15%;
+  right: 8%;
+  transform: rotate(12deg);
+}
+
+.music-notes.bottom-left {
+  bottom: 20%;
+  left: 10%;
+  transform: rotate(8deg);
+}
+
+.music-notes.bottom-right {
+  bottom: 15%;
+  right: 5%;
+  transform: rotate(-10deg);
+}
+
+/* 单个音符 (SVG绘制) */
+.note {
+  width: 30px;
+  height: 40px;
+  fill: var(--red-main);
+  opacity: 0.6;
+  filter: drop-shadow(0 2px 4px rgba(142, 27, 27, 0.4));
+  animation: noteFloat 3s ease-in-out infinite;
+}
+
+.note:nth-child(2) {
+  animation-delay: 0.5s;
+  opacity: 0.5;
+}
+
+.note:nth-child(3) {
+  animation-delay: 1s;
+  opacity: 0.4;
+}
+
+@keyframes noteFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes floatNotes {
+  0%, 100% { transform: translateY(0) rotate(var(--rotate, 0deg)); }
+  50% { transform: translateY(-20px) rotate(var(--rotate, 0deg)); }
+}
+
+/* 乐谱五线谱 */
+.staff-lines {
+  position: absolute;
+  width: 250px;
+  height: 80px;
+  opacity: 0.3;
+}
+
+.staff-lines.left {
+  top: 30%;
+  left: 3%;
+  transform: rotate(-8deg);
+}
+
+.staff-lines.right {
+  top: 40%;
+  right: 3%;
+  transform: rotate(5deg);
+}
+
+.staff-line {
+  width: 100%;
+  height: 1px;
+  background: var(--text-tertiary);
+  margin: 15px 0;
+  position: relative;
+}
+
+/* 在五线谱上添加音符 */
+.staff-line::before,
+.staff-line::after {
+  content: '♪';
+  position: absolute;
+  font-size: 1.5rem;
+  color: var(--red-main);
+  opacity: 0.6;
+}
+
+.staff-line:nth-child(1)::before {
+  left: 20%;
+  top: -20px;
+}
+
+.staff-line:nth-child(2)::after {
+  right: 30%;
+  top: -15px;
+}
+
+.staff-line:nth-child(4)::before {
+  left: 50%;
+  top: -18px;
+}
+
+/* 黑胶唱片 */
+.vinyl-container {
+  position: absolute;
+  top: 50%;
+  right: 10%;
+  transform: translateY(-50%);
+  width: 180px;
+  height: 180px;
+  cursor: pointer;
+  pointer-events: all;
+  transition: transform 0.3s;
+}
+
+.vinyl-container:hover {
+  transform: translateY(-50%) scale(1.05);
+}
+
+.vinyl-record {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: 
+    radial-gradient(circle at center, #1a1a1a 0%, #1a1a1a 25%, #0a0a0a 25%, #0a0a0a 100%);
+  box-shadow: 
+    0 8px 24px rgba(0, 0, 0, 0.6),
+    inset 0 0 20px rgba(255, 255, 255, 0.05);
+  position: relative;
+  animation: vinylSpin 3s linear infinite;
+  animation-play-state: running;
+}
+
+.vinyl-container.paused .vinyl-record {
+  animation-play-state: paused;
+}
+
+/* 唱片中心标签 */
+.vinyl-record::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60px;
+  height: 60px;
+  background: radial-gradient(circle, var(--red-main) 0%, var(--red-dim) 100%);
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(142, 27, 27, 0.5);
+}
+
+/* 唱片中心孔 */
+.vinyl-record::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 12px;
+  height: 12px;
+  background: #0a0a0a;
+  border-radius: 50%;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.8);
+}
+
+/* 唱片纹路 */
+.vinyl-grooves {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: repeating-radial-gradient(
+    circle at center,
+    transparent 0px,
+    transparent 2px,
+    rgba(255, 255, 255, 0.02) 2px,
+    rgba(255, 255, 255, 0.02) 4px
+  );
+}
+
+@keyframes vinylSpin {
+  to { transform: rotate(360deg); }
+}
+
+/* 唱臂 */
+.vinyl-arm {
+  position: absolute;
+  top: 10%;
+  right: -20px;
+  width: 100px;
+  height: 4px;
+  background: linear-gradient(90deg, #4a4a4a 0%, #6a6a6a 100%);
+  border-radius: 2px;
+  transform-origin: right center;
+  transform: rotate(-25deg);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  transition: transform 0.5s;
+}
+
+.vinyl-container:hover .vinyl-arm {
+  transform: rotate(-35deg);
+}
+
+.vinyl-arm::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 12px;
+  height: 12px;
+  background: var(--red-main);
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(142, 27, 27, 0.6);
+}
+
+/* 磁带装饰 */
+.cassette {
+  position: absolute;
+  width: 120px;
+  height: auto;
+  opacity: 0.7;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
+  pointer-events: all;
+  transition: all 0.3s;
+}
+
+.cassette:hover {
+  opacity: 1;
+  transform: scale(1.05) rotate(5deg);
+}
+
+.cassette-1 {
+  bottom: 15%;
+  left: 8%;
+  transform: rotate(-12deg);
+}
+
+.cassette-2 {
+  top: 25%;
+  left: 12%;
+  transform: rotate(8deg);
+}
+
+/* 手写便签/票根 */
+.sticker {
+  position: absolute;
+  padding: var(--space-md);
+  background: rgba(215, 215, 215, 0.9);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  transform: rotate(-5deg);
+  pointer-events: all;
+  transition: all 0.3s;
+}
+
+.sticker:hover {
+  transform: rotate(0deg) scale(1.05);
+  z-index: 20;
+}
+
+.sticker-ticket {
+  top: 20%;
+  right: 15%;
+  width: 150px;
+  border: 2px dashed var(--red-main);
+}
+
+.sticker-ticket::before {
+  content: 'ADMIT ONE';
+  display: block;
+  font-family: var(--font-title-en);
+  font-size: 0.75rem;
+  color: var(--red-main);
+  letter-spacing: 0.2em;
+  margin-bottom: var(--space-xs);
+  text-align: center;
+}
+
+.sticker-ticket::after {
+  content: '№ 0001';
+  display: block;
+  font-family: var(--font-body-en);
+  font-size: 0.625rem;
+  color: var(--ash-main);
+  text-align: right;
+  margin-top: var(--space-xs);
+}
+
+.handwriting-font {
+  font-family: var(--font-deco);
+  font-size: 1.25rem;
+  color: #101010;
+  text-align: center;
+  line-height: 1.4;
+}
+
+/* 胶带效果 */
+.tape-strip {
+  position: absolute;
+  width: 80px;
+  height: 25px;
+  background: rgba(255, 255, 200, 0.3);
+  border: 1px solid rgba(200, 200, 150, 0.4);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transform: rotate(-45deg);
+  top: -10px;
+  left: 50%;
+  margin-left: -40px;
+}
+/* ========== BLOCK: Musical Decorations END ========== */
+
+/* ========== BLOCK: SVG Music Notes START ========== */
+/* 这些是内联SVG的样式，实际SVG会在HTML中定义 */
+.note-svg {
+  width: 30px;
+  height: 40px;
+}
+
+.note-svg path {
+  fill: var(--red-main);
+  opacity: 0.6;
+}
+/* ========== BLOCK: SVG Music Notes END ========== */
+
