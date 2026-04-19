@@ -1,0 +1,52 @@
+/* ========== BLOCK: Premium Aesthetic Fonts START ========== */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Permanent+Marker&family=UnifrakturMaguntia&family=Zhi+Mang+Xing&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Rubik+Glitch&display=swap');
+
+:root {
+  /* 1. 游戏/像素体 - 绝对正宗的8-bit感 */
+  --font-pixel: 'Press Start 2P', monospace;
+  
+  /* 2. 纯正哥特体 - 华丽、古典、暗黑魔法感 */
+  --font-gothic: 'UnifrakturMaguntia', serif;
+  
+  /* 3. 记号笔/涂鸦 - 狂放的街头手写感 */
+  --font-marker: 'Permanent Marker', cursive;
+  
+  /* 4. 噪音/故障 - 视觉撕裂感 */
+  --font-glitch: 'Rubik Glitch', system-ui;
+  
+  /* 5. 中文狂草 - 极具艺术张力的毛笔字 */
+  --font-calligraphy: 'Zhi Mang Xing', cursive;
+  
+  /* 6. 等宽科技 - 极简主义、黑客/终端感 */
+  --font-tech: 'Space Mono', monospace;
+  
+  /* 覆盖全局基础字体，彻底告别普通黑体/衬线体 */
+  --font-body-en: var(--font-tech);
+  --font-title-cn: var(--font-calligraphy);
+  --font-title-en: var(--font-gothic);
+}
+
+/* 全局字体应用强化 */
+body, button, input {
+  font-family: var(--font-tech);
+}
+
+h1, h2, h3, .title-text {
+  font-family: var(--font-calligraphy);
+}
+
+.title-en, .logo-main, .title-number {
+  font-family: var(--font-gothic);
+}
+
+.nav-link {
+  font-family: var(--font-tech);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.handwriting-font {
+  font-family: var(--font-marker);
+}
+/* ========== BLOCK: Premium Aesthetic Fonts END ========== */
