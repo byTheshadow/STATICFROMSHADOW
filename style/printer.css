@@ -1,0 +1,212 @@
+/* ========== BLOCK: Miaomiao Printer (高度模拟真实) START ========== */
+.miaomiao-printer {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+/* 打印机机身 */
+.printer-body {
+  width: 320px;
+  height: 180px;
+  background: linear-gradient(135deg, #e8e8e8 0%, #c0c0c0 100%);
+  border-radius: 12px 12px 8px 8px;
+  box-shadow: 
+    0 10px 30px rgba(0, 0, 0, 0.6),
+    inset 0 2px 4px rgba(255, 255, 255, 0.3),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.2);
+  position: relative;
+  border: 2px solid #a0a0a0;
+}
+
+/* 打印机顶部指示灯 */
+.printer-body::before {
+  content: '';
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  width: 8px;
+  height: 8px;
+  background: #ff4444;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #ff4444;
+  animation: powerBlink 2s infinite;
+}
+
+@keyframes powerBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+/* 打印机品牌标识 */
+.printer-body::after {
+  content: 'MEMOBIRD';
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-family: var(--font-title-en);
+  font-size: 0.75rem;
+  color: #666;
+  letter-spacing: 0.1em;
+}
+
+/* 出纸口 */
+.printer-slot {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 4px;
+  background: #333;
+  border-radius: 2px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+/* 打印机按钮 */
+.printer-button {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #f0f0f0, #d0d0d0);
+  border-radius: 50%;
+  border: 2px solid #a0a0a0;
+  box-shadow: 
+    0 2px 5px rgba(0, 0, 0, 0.3),
+    inset 0 1px 2px rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.printer-button:hover {
+  transform: translateX(-50%) translateY(1px);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.printer-button::after {
+  content: '▶';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #666;
+  font-size: 1rem;
+}
+
+/* 纸张容器 */
+.printer-paper-wrapper {
+  position: relative;
+  width: 200px;
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: -20px; /* 让纸张从打印机底部"长出来" */
+}
+
+/* 打印纸 */
+#printer-paper {
+  width: 200px;
+  min-height: 0;
+  max-height: 500px;
+  background: #D7D7D7;
+  color: #101010;
+  font-family: var(--font-title-en);
+  font-size: 0.875rem;
+  padding: var(--space-md);
+  box-sizing: border-box;
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.4),
+    inset 0 0 20px rgba(0, 0, 0, 0.05);
+  position: relative;
+  transition: min-height 0.8s ease-out;
+  transform-origin: top center;
+  border-left: 1px dashed #b0b0b0;
+  border-right: 1px dashed #b0b0b0;
+}
+
+/* 纸张顶部撕裂边缘 */
+#printer-paper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 8px;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent 0px,
+    transparent 3px,
+    #D7D7D7 3px,
+    #D7D7D7 6px
+  );
+  filter: drop-shadow(0 -1px 1px rgba(0, 0, 0, 0.2));
+}
+
+/* 纸张底部撕裂边缘 */
+#printer-paper::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 8px;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent 0px,
+    transparent 3px,
+    #D7D7D7 3px,
+    #D7D7D7 6px
+  );
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.2));
+}
+
+/* 打印内容行 */
+#printer-paper p {
+  opacity: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  margin: var(--space-xs) 0;
+  line-height: 1.6;
+  border-right: 0.15em solid #101010;
+  animation: 
+    typing 1.5s steps(30, end),
+    blinkCaret 0.75s step-end infinite;
+  animation-fill-mode: forwards;
+  animation-play-state: paused;
+}
+
+#printer-paper p.printed {
+  border-right: none;
+  white-space: normal;
+  animation: none;
+}
+
+/* 打字机效果 */
+@keyframes typing {
+  from { width: 0; opacity: 1; }
+  to { width: 100%; opacity: 1; }
+}
+
+@keyframes blinkCaret {
+  from, to { border-color: transparent; }
+  50% { border-color: #101010; }
+}
+
+/* 打印完成后纸张轻微晃动 */
+#printer-paper.complete {
+  animation: paperShake 0.5s ease-in-out;
+}
+
+@keyframes paperShake {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-1deg); }
+  75% { transform: rotate(1deg); }
+}
+/* ========== BLOCK: Miaomiao Printer END ========== */
