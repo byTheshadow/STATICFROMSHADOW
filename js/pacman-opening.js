@@ -3,10 +3,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const openingScreen = document.querySelector('.opening-screen');
   const skipButton = document.querySelector('.skip-button');
   const mainContent = document.querySelector('.main-content');
+  const nav = document.querySelector('.main-nav');
   
-  // 隐藏主内容
+  // 隐藏主内容和导航栏
   if (mainContent) {
     mainContent.style.opacity = '0';
+    mainContent.style.pointerEvents = 'none';
+  }
+  if (nav) {
+    nav.style.opacity = '0';
+    nav.style.pointerEvents = 'none';
   }
   
   let animationSkipped = false;
@@ -55,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
   generateDots();
   
   // 场景2: 显示404
-  setTimeout(() => {
+  const timeout404 = setTimeout(() => {
     if (animationSkipped) return;
     
     const gameContainer = document.querySelector('.game-container');
@@ -78,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }, timeline.show404);
   
   // 场景3: 显示 wait really
-  setTimeout(() => {
+  const timeoutWait = setTimeout(() => {
     if (animationSkipped) return;
     
     const openingText = document.querySelector('.opening-text');
@@ -90,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }, timeline.showWait);
   
   // 场景4: 显示 welcome
-  setTimeout(() => {
+  const timeoutWelcome = setTimeout(() => {
     if (animationSkipped) return;
     
     const openingText = document.querySelector('.opening-text');
@@ -114,7 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }, timeline.showWelcome);
   
   // 场景5: 幽灵消散
-  setTimeout(() => {
+  const timeoutDissolve = setTimeout(() => {
     if (animationSkipped) return;
     
     const ghost = document.querySelector('.ghost');
@@ -125,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }, timeline.ghostDissolve);
   
   // 场景6: 完成
-  setTimeout(() => {
+  const timeoutFinish = setTimeout(() => {
     if (!animationSkipped) {
       finishOpening();
     }
@@ -161,14 +167,34 @@ document.addEventListener('DOMContentLoaded', () => {
   function finishOpening() {
     animationSkipped = true;
     
+    // 清除所有定时器
+    clearTimeout(timeout404);
+    clearTimeout(timeoutWait);
+    clearTimeout(timeoutWelcome);
+    clearTimeout(timeoutDissolve);
+    clearTimeout(timeoutFinish);
+    
     if (openingScreen) {
       openingScreen.classList.add('finished');
       setTimeout(() => {
         openingScreen.style.display = 'none';
+        
+        // 显示主内容和导航栏
         if (mainContent) {
           mainContent.style.opacity = '1';
+          mainContent.style.pointerEvents = 'all';
           mainContent.style.transition = 'opacity 1s';
         }
+        if (nav) {
+          nav.style.opacity = '1';
+          nav.style.pointerEvents = 'all';
+          nav.style.transition = 'opacity 1s';
+        }
+        
+        // 触发打印机动画（如果存在）
+        const printerEvent = new CustomEvent('openingComplete');
+        document.dispatchEvent(printerEvent);
+        
       }, 800);
     }
   }
@@ -179,11 +205,24 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   
   // 按任意键跳过
-  document.addEventListener('keydown', (e) => {
+  const skipHandler = (e) => {
     if (!animationSkipped) {
       finishOpening();
+      document.removeEventListener('keydown', skipHandler);
     }
-  }, { once: true });
+  };
+  document.addEventListener('keydown', skipHandler);
+  
+  // 点击屏幕跳过
+  const clickHandler = (e) => {
+    if (!animationSkipped && e.target !== skipButton) {
+      finishOpening();
+      openingScreen.removeEventListener('click', clickHandler);
+    }
+  };
+  if (openingScreen) {
+    openingScreen.addEventListener('click', clickHandler);
+  }
 });
 /* ========== BLOCK: Pacman Ghost Opening Animation Logic END ========== */
 
@@ -246,6 +285,8 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener('DOMContentLoaded', () => {
   const revealElements = document.querySelectorAll('.scroll-reveal');
   
+  if (revealElements.length === 0) return;
+  
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -260,6 +301,57 @@ document.addEventListener('DOMContentLoaded', () => {
   revealElements.forEach(el => observer.observe(el));
 });
 /* ========== BLOCK: Scroll Reveal Animation END ========== */
+
+/* ========== BLOCK: Parallax Effect START ========== */
+document.addEventListener('DOMContentLoaded', () => {
+  const parallaxElements = document.querySelectorAll('.parallax-element');
+  
+  if (parallaxElements.length === 0) return;
+  
+  let ticking = false;
+  
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        const scrolled = window.pageYOffset;
+        
+        parallaxElements.forEach((el) => {
+          const speed = parseFloat(el.dataset.speed) || 0.5;
+          const yPos = -(scrolled * speed);
+          el.style.transform = `translateY(${yPos}px)`;
+        });
+        
+        ticking = false;
+      });
+      
+      ticking = true;
+    }
+  });
+});
+/* ========== BLOCK: Parallax Effect END ========== */
+
+/* ========== BLOCK: Magnetic Effect START ========== */
+document.addEventListener('DOMContentLoaded', () => {
+  const magneticElements = document.querySelectorAll('.magnetic-element');
+  
+  magneticElements.forEach(el => {
+    el.addEventListener('mousemove', (e) => {
+      const rect = el.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+      
+      const moveX = x * 0.3;
+      const moveY = y * 0.3;
+      
+      el.style.transform = `translate(${moveX}px, ${moveY}px)`;
+    });
+    
+    el.addEventListener('mouseleave', () => {
+      el.style.transform = 'translate(0, 0)';
+    });
+  });
+});
+/* ========== BLOCK: Magnetic Effect END ========== */
 
 /* ========== BLOCK: Page Transition Effect START ========== */
 function createPageTransition() {
@@ -283,3 +375,24 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 /* ========== BLOCK: Page Transition Effect END ========== */
+
+/* ========== BLOCK: Glitch Text Trigger START ========== */
+document.addEventListener('DOMContentLoaded', () => {
+  const glitchTexts = document.querySelectorAll('.glitch-text');
+  
+  glitchTexts.forEach(el => {
+    // 设置 data-text 属性
+    if (!el.dataset.text) {
+      el.dataset.text = el.textContent;
+    }
+    
+    el.addEventListener('mouseenter', () => {
+      el.classList.add('active');
+      setTimeout(() => {
+        el.classList.remove('active');
+      }, 300);
+    });
+  });
+});
+/* ========== BLOCK: Glitch Text Trigger END ========== */
+
