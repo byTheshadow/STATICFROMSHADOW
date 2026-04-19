@@ -365,6 +365,15 @@
 .hidden {
   display: none !important;
 }
+/* 确保开屏动画不影响鼠标显示 */
+.opening-screen * {
+  cursor: default;
+}
+
+.opening-screen .skip-button {
+  cursor: pointer;
+}
+
 
 /* ========== BLOCK: Pacman Ghost Opening Animation (Premium) END ========== */
 
