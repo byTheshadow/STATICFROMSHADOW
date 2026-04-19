@@ -25,17 +25,35 @@
 </head>
 <body>
   
-  <!-- ========== BLOCK: Opening Screen START ========== -->
-  <div class="opening-screen">
-    <div class="tv-boot"></div>
-    <div class="scan-line"></div>
-    <div class="noise-flash"></div>
-    <h1 class="opening-logo">STATIC FROM SHADOW</h1>
-    <p class="opening-subtitle">玉元一的噪音档案</p>
-    <div class="loading-bar"></div>
-    <button class="skip-button">SKIP ›</button>
+ <!-- ========== BLOCK: Pacman Ghost Opening START ========== -->
+<div class="opening-screen">
+  <!-- 游戏容器 -->
+  <div class="game-container">
+    <div class="maze-bg"></div>
+    <div class="dots-path"></div>
+    
+    <!-- 幽灵 -->
+    <div class="ghost">
+      <div class="ghost-body">
+        <div class="ghost-eyes">
+          <div class="ghost-eye"></div>
+          <div class="ghost-eye"></div>
+        </div>
+      </div>
+    </div>
   </div>
-  <!-- ========== BLOCK: Opening Screen END ========== -->
+  
+  <!-- 文字显示区 -->
+  <div class="opening-text"></div>
+  
+  <!-- 屏幕闪烁 -->
+  <div class="screen-flash"></div>
+  
+  <!-- 跳过按钮 -->
+  <button class="skip-button">SKIP ›</button>
+</div>
+<!-- ========== BLOCK: Pacman Ghost Opening END ========== -->
+
   
   <!-- ========== BLOCK: Custom Cursor START ========== -->
   <div class="custom-cursor"></div>
