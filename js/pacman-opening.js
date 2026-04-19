@@ -1,398 +1,361 @@
-/* ========== BLOCK: Pacman Ghost Opening Animation Logic START ========== */
-document.addEventListener('DOMContentLoaded', () => {
-  const openingScreen = document.querySelector('.opening-screen');
-  const skipButton = document.querySelector('.skip-button');
-  const mainContent = document.querySelector('.main-content');
-  const nav = document.querySelector('.main-nav');
-  
-  // 隐藏主内容和导航栏
-  if (mainContent) {
-    mainContent.style.opacity = '0';
-    mainContent.style.pointerEvents = 'none';
-  }
-  if (nav) {
-    nav.style.opacity = '0';
-    nav.style.pointerEvents = 'none';
-  }
-  
-  let animationSkipped = false;
-  
-  // 动画时间轴
-  const timeline = {
-    dotsEaten: 3000,      // 3s - 豆豆吃完
-    show404: 4000,        // 4s - 显示404
-    showWait: 5500,       // 5.5s - 显示wait really
-    showWelcome: 7000,    // 7s - 显示welcome
-    ghostDissolve: 9000,  // 9s - 幽灵消散
-    finish: 10000         // 10s - 完成
-  };
-  
-  // 生成豆豆
-  function generateDots() {
-    const dotsPath = document.querySelector('.dots-path');
-    if (!dotsPath) return;
-    
-    const positions = [
-      { x: 20, y: 50 }, { x: 30, y: 40 }, { x: 40, y: 30 },
-      { x: 50, y: 35 }, { x: 60, y: 45 }, { x: 70, y: 55 },
-      { x: 80, y: 50 }, { x: 85, y: 40 }, { x: 75, y: 30 },
-      { x: 65, y: 25 }, { x: 55, y: 30 }, { x: 45, y: 40 },
-      { x: 35, y: 50 }, { x: 25, y: 60 }, { x: 35, y: 70 },
-      { x: 50, y: 65 }, { x: 65, y: 70 }, { x: 75, y: 65 }
-    ];
-    
-    positions.forEach((pos, index) => {
-      const dot = document.createElement('div');
-      dot.className = 'dot';
-      dot.style.left = `${pos.x}%`;
-      dot.style.top = `${pos.y}%`;
-      dotsPath.appendChild(dot);
-      
-      // 逐个吃掉豆豆
-      setTimeout(() => {
-        if (!animationSkipped) {
-          dot.classList.add('eaten');
-        }
-      }, 150 * index);
-    });
-  }
-  
-  // 场景1: 幽灵吃豆豆
-  generateDots();
-  
-  // 场景2: 显示404
-  const timeout404 = setTimeout(() => {
-    if (animationSkipped) return;
-    
-    const gameContainer = document.querySelector('.game-container');
-    const openingText = document.querySelector('.opening-text');
-    const screenFlash = document.querySelector('.screen-flash');
-    
-    if (gameContainer) gameContainer.style.opacity = '0';
-    if (screenFlash) {
-      screenFlash.classList.add('active');
-      setTimeout(() => screenFlash.classList.remove('active'), 500);
-    }
-    
-    if (openingText) {
-      openingText.innerHTML = `
-        <div class="text-404">404</div>
-        <div class="text-not-found">NOT FOUND!!</div>
-      `;
-      openingText.style.opacity = '1';
-    }
-  }, timeline.show404);
-  
-  // 场景3: 显示 wait really
-  const timeoutWait = setTimeout(() => {
-    if (animationSkipped) return;
-    
-    const openingText = document.querySelector('.opening-text');
-    if (openingText) {
-      openingText.innerHTML = `
-        <div class="text-wait">wait, really?.....</div>
-      `;
-    }
-  }, timeline.showWait);
-  
-  // 场景4: 显示 welcome
-  const timeoutWelcome = setTimeout(() => {
-    if (animationSkipped) return;
-    
-    const openingText = document.querySelector('.opening-text');
-    const ghost = document.querySelector('.ghost');
-    const gameContainer = document.querySelector('.game-container');
-    
-    if (gameContainer) gameContainer.style.opacity = '1';
-    if (ghost) {
-      ghost.classList.add('turn-around');
-      ghost.style.animation = 'none';
-      ghost.style.left = '50%';
-      ghost.style.top = '50%';
-    }
-    
-    if (openingText) {
-      openingText.innerHTML = `
-        <div class="text-welcome">WELCOME TO<br>SHADOW'S PLACE!!</div>
-        <div class="text-subtitle">玉元一的噪音档案</div>
-      `;
-    }
-  }, timeline.showWelcome);
-  
-  // 场景5: 幽灵消散
-  const timeoutDissolve = setTimeout(() => {
-    if (animationSkipped) return;
-    
-    const ghost = document.querySelector('.ghost');
-    if (ghost) {
-      ghost.classList.add('dissolve');
-      createParticles(ghost);
-    }
-  }, timeline.ghostDissolve);
-  
-  // 场景6: 完成
-  const timeoutFinish = setTimeout(() => {
-    if (!animationSkipped) {
-      finishOpening();
-    }
-  }, timeline.finish);
-  
-  // 创建粒子效果
-  function createParticles(element) {
-    const rect = element.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-    
-    for (let i = 0; i < 30; i++) {
-      const particle = document.createElement('div');
-      particle.className = 'particle';
-      
-      const angle = (Math.PI * 2 * i) / 30;
-      const distance = 100 + Math.random() * 100;
-      const tx = Math.cos(angle) * distance;
-      const ty = Math.sin(angle) * distance;
-      
-      particle.style.left = centerX + 'px';
-      particle.style.top = centerY + 'px';
-      particle.style.setProperty('--tx', tx + 'px');
-      particle.style.setProperty('--ty', ty + 'px');
-      
-      document.body.appendChild(particle);
-      
-      setTimeout(() => particle.remove(), 2000);
-    }
-  }
-  
-  // 完成动画
-  function finishOpening() {
-    animationSkipped = true;
-    
-    // 清除所有定时器
-    clearTimeout(timeout404);
-    clearTimeout(timeoutWait);
-    clearTimeout(timeoutWelcome);
-    clearTimeout(timeoutDissolve);
-    clearTimeout(timeoutFinish);
-    
-    if (openingScreen) {
-      openingScreen.classList.add('finished');
-      setTimeout(() => {
-        openingScreen.style.display = 'none';
-        
-        // 显示主内容和导航栏
-        if (mainContent) {
-          mainContent.style.opacity = '1';
-          mainContent.style.pointerEvents = 'all';
-          mainContent.style.transition = 'opacity 1s';
-        }
-        if (nav) {
-          nav.style.opacity = '1';
-          nav.style.pointerEvents = 'all';
-          nav.style.transition = 'opacity 1s';
-        }
-        
-        // 触发打印机动画（如果存在）
-        const printerEvent = new CustomEvent('openingComplete');
-        document.dispatchEvent(printerEvent);
-        
-      }, 800);
-    }
-  }
-  
-  // 跳过按钮
-  if (skipButton) {
-    skipButton.addEventListener('click', finishOpening);
-  }
-  
-  // 按任意键跳过
-  const skipHandler = (e) => {
-    if (!animationSkipped) {
-      finishOpening();
-      document.removeEventListener('keydown', skipHandler);
-    }
-  };
-  document.addEventListener('keydown', skipHandler);
-  
-  // 点击屏幕跳过
-  const clickHandler = (e) => {
-    if (!animationSkipped && e.target !== skipButton) {
-      finishOpening();
-      openingScreen.removeEventListener('click', clickHandler);
-    }
-  };
-  if (openingScreen) {
-    openingScreen.addEventListener('click', clickHandler);
-  }
-});
-/* ========== BLOCK: Pacman Ghost Opening Animation Logic END ========== */
+/* ========== BLOCK: Pacman Ghost Opening Animation (Premium) START ========== */
 
-/* ========== BLOCK: Custom Cursor START ========== */
-document.addEventListener('DOMContentLoaded', () => {
-  const cursor = document.querySelector('.custom-cursor');
-  if (!cursor) return;
-  
-  let mouseX = 0;
-  let mouseY = 0;
-  let cursorX = 0;
-  let cursorY = 0;
-  
-  document.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-    cursor.classList.add('active');
-    
-    // 创建粒子轨迹（节流）
-    if (Math.random() > 0.8) {
-      createTrail(e.clientX, e.clientY);
-    }
-  });
-  
-  // 平滑跟随
-  function animateCursor() {
-    cursorX += (mouseX - cursorX) * 0.2;
-    cursorY += (mouseY - cursorY) * 0.2;
-    cursor.style.left = cursorX + 'px';
-    cursor.style.top = cursorY + 'px';
-    requestAnimationFrame(animateCursor);
-  }
-  animateCursor();
-  
-  // 悬停效果
-  const interactiveElements = document.querySelectorAll('a, button, .nav-link, .filter-tag, .card, .vinyl-container, .cassette, .sticker');
-  interactiveElements.forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      document.body.classList.add('cursor-hover');
-    });
-    el.addEventListener('mouseleave', () => {
-      document.body.classList.remove('cursor-hover');
-    });
-  });
-  
-  // 创建粒子轨迹
-  function createTrail(x, y) {
-    const trail = document.createElement('div');
-    trail.className = 'cursor-trail';
-    trail.style.left = x + 'px';
-    trail.style.top = y + 'px';
-    document.body.appendChild(trail);
-    
-    setTimeout(() => trail.remove(), 800);
-  }
-});
-/* ========== BLOCK: Custom Cursor END ========== */
-
-/* ========== BLOCK: Scroll Reveal Animation START ========== */
-document.addEventListener('DOMContentLoaded', () => {
-  const revealElements = document.querySelectorAll('.scroll-reveal');
-  
-  if (revealElements.length === 0) return;
-  
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('revealed');
-      }
-    });
-  }, {
-    threshold: 0.1,
-    rootMargin: '0px 0px -100px 0px'
-  });
-  
-  revealElements.forEach(el => observer.observe(el));
-});
-/* ========== BLOCK: Scroll Reveal Animation END ========== */
-
-/* ========== BLOCK: Parallax Effect START ========== */
-document.addEventListener('DOMContentLoaded', () => {
-  const parallaxElements = document.querySelectorAll('.parallax-element');
-  
-  if (parallaxElements.length === 0) return;
-  
-  let ticking = false;
-  
-  window.addEventListener('scroll', () => {
-    if (!ticking) {
-      window.requestAnimationFrame(() => {
-        const scrolled = window.pageYOffset;
-        
-        parallaxElements.forEach((el) => {
-          const speed = parseFloat(el.dataset.speed) || 0.5;
-          const yPos = -(scrolled * speed);
-          el.style.transform = `translateY(${yPos}px)`;
-        });
-        
-        ticking = false;
-      });
-      
-      ticking = true;
-    }
-  });
-});
-/* ========== BLOCK: Parallax Effect END ========== */
-
-/* ========== BLOCK: Magnetic Effect START ========== */
-document.addEventListener('DOMContentLoaded', () => {
-  const magneticElements = document.querySelectorAll('.magnetic-element');
-  
-  magneticElements.forEach(el => {
-    el.addEventListener('mousemove', (e) => {
-      const rect = el.getBoundingClientRect();
-      const x = e.clientX - rect.left - rect.width / 2;
-      const y = e.clientY - rect.top - rect.height / 2;
-      
-      const moveX = x * 0.3;
-      const moveY = y * 0.3;
-      
-      el.style.transform = `translate(${moveX}px, ${moveY}px)`;
-    });
-    
-    el.addEventListener('mouseleave', () => {
-      el.style.transform = 'translate(0, 0)';
-    });
-  });
-});
-/* ========== BLOCK: Magnetic Effect END ========== */
-
-/* ========== BLOCK: Page Transition Effect START ========== */
-function createPageTransition() {
-  const transition = document.querySelector('.page-transition');
-  if (!transition) return;
-  
-  transition.classList.add('active');
-  
-  setTimeout(() => {
-    transition.classList.remove('active');
-  }, 1200);
+.opening-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: #0a0a0a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  pointer-events: all;
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  const navLinks = document.querySelectorAll('.nav-link');
-  
-  navLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-      createPageTransition();
-    });
-  });
-});
-/* ========== BLOCK: Page Transition Effect END ========== */
+.opening-screen.finished {
+  animation: screenShatter 0.8s forwards;
+}
 
-/* ========== BLOCK: Glitch Text Trigger START ========== */
-document.addEventListener('DOMContentLoaded', () => {
-  const glitchTexts = document.querySelectorAll('.glitch-text');
-  
-  glitchTexts.forEach(el => {
-    // 设置 data-text 属性
-    if (!el.dataset.text) {
-      el.dataset.text = el.textContent;
-    }
-    
-    el.addEventListener('mouseenter', () => {
-      el.classList.add('active');
-      setTimeout(() => {
-        el.classList.remove('active');
-      }, 300);
-    });
-  });
-});
-/* ========== BLOCK: Glitch Text Trigger END ========== */
+@keyframes screenShatter {
+  0% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.1); filter: blur(10px); }
+  100% { opacity: 0; transform: scale(0.8); filter: blur(20px); visibility: hidden; }
+}
+
+/* 游戏容器 */
+.game-container {
+  position: relative;
+  width: 600px;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 迷宫背景 */
+.maze-bg {
+  position: absolute;
+  inset: 0;
+  opacity: 0.3;
+  background: 
+    repeating-linear-gradient(0deg, transparent, transparent 50px, var(--red-dim) 50px, var(--red-dim) 52px),
+    repeating-linear-gradient(90deg, transparent, transparent 50px, var(--red-dim) 50px, var(--red-dim) 52px);
+}
+
+/* 豆豆路径 */
+.dots-path {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dot {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: var(--text-primary);
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(215, 215, 215, 0.6);
+  opacity: 1;
+  transition: opacity 0.2s;
+}
+
+.dot.eaten {
+  opacity: 0;
+  transform: scale(0);
+}
+
+/* 幽灵 */
+.ghost {
+  position: absolute;
+  width: 60px;
+  height: 70px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  animation: ghostMove 3s ease-in-out;
+  z-index: 10;
+}
+
+/* 幽灵身体 */
+.ghost-body {
+  width: 100%;
+  height: 100%;
+  background: var(--red-main);
+  border-radius: 50% 50% 0 0;
+  position: relative;
+  box-shadow: 0 0 20px rgba(142, 27, 27, 0.6), inset 0 -10px 20px rgba(0, 0, 0, 0.3);
+  animation: ghostFloat 1s ease-in-out infinite;
+}
+
+@keyframes ghostFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+/* 幽灵底部波浪 */
+.ghost-body::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 15px;
+  background: 
+    radial-gradient(circle at 10px 0, transparent 10px, var(--red-main) 10px, var(--red-main) 20px, transparent 20px),
+    radial-gradient(circle at 30px 0, transparent 10px, var(--red-main) 10px, var(--red-main) 20px, transparent 20px),
+    radial-gradient(circle at 50px 0, transparent 10px, var(--red-main) 10px, var(--red-main) 20px, transparent 20px);
+  background-size: 20px 15px;
+  background-position: 0 0, 20px 0, 40px 0;
+  background-repeat: repeat-x;
+}
+
+/* 幽灵眼睛 */
+.ghost-eyes {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 15px;
+}
+
+.ghost-eye {
+  width: 12px;
+  height: 16px;
+  background: #fff;
+  border-radius: 50% 50% 40% 40%;
+  position: relative;
+  animation: eyeBlink 3s infinite;
+}
+
+.ghost-eye::after {
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 8px;
+  background: #0a0a0a;
+  border-radius: 50%;
+  animation: eyeMove 2s infinite;
+}
+
+@keyframes eyeBlink {
+  0%, 96%, 100% { height: 16px; }
+  98% { height: 2px; }
+}
+
+@keyframes eyeMove {
+  0%, 100% { transform: translateX(-50%); }
+  50% { transform: translateX(-30%); }
+}
+
+/* 幽灵移动路径 */
+@keyframes ghostMove {
+  0% { left: -10%; top: 50%; }
+  25% { left: 30%; top: 30%; }
+  50% { left: 50%; top: 50%; }
+  75% { left: 70%; top: 70%; }
+  100% { left: 110%; top: 50%; }
+}
+
+/* 幽灵转身动画 */
+.ghost.turn-around {
+  animation: ghostTurn 1s forwards;
+}
+
+@keyframes ghostTurn {
+  0% { transform: translate(-50%, -50%) scaleX(1); }
+  50% { transform: translate(-50%, -50%) scaleX(0.2); }
+  100% { transform: translate(-50%, -50%) scaleX(-1); left: 50%; top: 50%; }
+}
+
+/* 幽灵消散 */
+.ghost.dissolve {
+  animation: ghostDissolve 1.5s forwards;
+}
+
+@keyframes ghostDissolve {
+  0% { opacity: 1; filter: blur(0); }
+  50% { opacity: 0.5; transform: translate(-50%, -50%) scale(1.2); filter: blur(5px); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(2); filter: blur(20px); }
+}
+
+/* 粒子效果 */
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: var(--red-bright);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: particleFloat 2s ease-out forwards;
+}
+
+@keyframes particleFloat {
+  0% { opacity: 1; transform: translate(0, 0) scale(1); }
+  100% { opacity: 0; transform: translate(var(--tx), var(--ty)) scale(0); }
+}
+
+/* ================== 全新高级版文字动画 ================== */
+
+/* 文字容器 */
+.opening-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  opacity: 0;
+  z-index: 20;
+  width: 100%;
+}
+
+/* 404 文字 - 完美契合吃豆人的 8-bit 像素风 + 故障抖动 */
+.text-404 {
+  font-family: var(--font-pixel);
+  font-size: clamp(3rem, 10vw, 6rem);
+  color: var(--red-bright);
+  text-shadow: 
+    4px 4px 0 var(--red-dim),
+    -3px -3px 0 var(--purple-main);
+  margin-bottom: 1.5rem;
+  animation: text404Appear 0.5s forwards, pixelGlitch 2s infinite;
+}
+
+@keyframes pixelGlitch {
+  0%, 100% { transform: translate(0, 0); }
+  20% { transform: translate(-4px, 4px); }
+  40% { transform: translate(4px, -4px); }
+  60% { transform: translate(-4px, -4px); }
+  80% { transform: translate(4px, 4px); }
+}
+
+@keyframes text404Appear {
+  0% { opacity: 0; transform: scale(0.5); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* NOT FOUND - 像素风闪烁 */
+.text-not-found {
+  font-family: var(--font-pixel);
+  font-size: clamp(1rem, 4vw, 2rem);
+  color: var(--text-primary);
+  text-shadow: 2px 2px 0 var(--red-main);
+  animation: pixelBlink 1s infinite;
+}
+
+@keyframes pixelBlink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+/* Wait Really 文字 - 狂放的记号笔手写感，仿佛在屏幕上涂鸦 */
+.text-wait {
+  font-family: var(--font-marker);
+  font-size: clamp(2rem, 6vw, 4rem);
+  color: var(--text-primary);
+  transform: rotate(-5deg);
+  animation: waitIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  opacity: 0;
+}
+
+@keyframes waitIn {
+  0% { opacity: 0; transform: translateY(50px) rotate(-15deg) scale(0.8); }
+  100% { opacity: 1; transform: translateY(0) rotate(-5deg) scale(1); }
+}
+
+/* Welcome 文字 - 极其华丽暗黑的古典哥特体，带有电影大片般的降临感 */
+.text-welcome {
+  font-family: var(--font-gothic);
+  font-size: clamp(3rem, 8vw, 6rem);
+  color: var(--text-primary);
+  text-shadow: 
+    0 0 30px rgba(142, 27, 27, 0.9),
+    3px 3px 0 var(--red-main),
+    8px 8px 0 var(--red-dim);
+  animation: gothicReveal 1.5s ease-out forwards;
+  line-height: 1.2;
+}
+
+@keyframes gothicReveal {
+  0% { opacity: 0; filter: blur(20px); transform: scale(1.5) translateY(-20px); letter-spacing: -0.5em; }
+  100% { opacity: 1; filter: blur(0); transform: scale(1) translateY(0); letter-spacing: normal; }
+}
+
+/* 中文副标题 - 现代酸性排版：极细黑体/黄油体，拉开间距，有一种清冷的高级感 */
+.text-subtitle {
+  font-family: var(--font-thin-cn);
+  font-weight: 300;
+  font-size: clamp(1.2rem, 3vw, 2rem);
+  color: var(--red-bright);
+  letter-spacing: 0.8em; /* 极大的字间距产生酸性高级感 */
+  margin-top: 2rem;
+  margin-left: 0.8em; /* 平衡 letter-spacing 造成的居中偏移 */
+  opacity: 0;
+  transform: translateY(20px);
+  animation: acidFadeIn 1.5s 0.8s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+  text-shadow: 0 0 10px rgba(142, 27, 27, 0.8);
+}
+
+@keyframes acidFadeIn {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 屏幕闪烁效果 */
+.screen-flash {
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 15;
+}
+
+.screen-flash.active {
+  animation: flashScreen 0.5s;
+}
+
+@keyframes flashScreen {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 0.8; }
+}
+
+/* 跳过按钮也改为硬核像素风 */
+.skip-button {
+  font-family: var(--font-pixel);
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  position: absolute;
+  bottom: 5%;
+  right: 5%;
+  padding: 1rem 1.5rem;
+  background: rgba(142, 27, 27, 0.2);
+  border: 2px solid var(--red-main);
+  color: var(--text-secondary);
+  cursor: pointer;
+  pointer-events: all;
+  transition: all 0.3s;
+  z-index: 30;
+  box-shadow: 4px 4px 0 rgba(142, 27, 27, 0.4);
+}
+
+.skip-button:hover {
+  background: rgba(142, 27, 27, 0.5);
+  color: var(--text-primary);
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 rgba(142, 27, 27, 0.6);
+}
+
+/* 隐藏状态 */
+.hidden {
+  display: none !important;
+}
+/* ========== BLOCK: Pacman Ghost Opening Animation (Premium) END ========== */
+
 
