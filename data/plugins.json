@@ -1,0 +1,21 @@
+{
+  "plugins": [
+    {
+      "id": "plugin_001",
+      "name": "Bone & Blood",
+      "nameZh": "骨与血",
+      "description": "为角色注入真实的「血液」，在等待AI回复的间隙，也能与你的世界持续共振。",
+      "vinylImage": "https://tc-new.z.wiki/autoupload/黑胶唱片图.png/webp",
+      "version": "v1.0.0",
+      "status": "maintained",
+      "repoUrl": "https://github.com/shadow-yuyuan-yi/bone-and-blood",
+      "demoUrl": "",
+      "tags": ["音频", "图像", "后台", "API"],
+      "features": [
+        "采用副API架构，不影响主窗口RP生成",
+        "MP3模式：可接入歌曲或URL进行播放，新内容生成时有提示音",
+        "图像生成：可接入生图API为日记/新闻自动配图，支持后台生成"
+      ]
+    }
+  ]
+}
