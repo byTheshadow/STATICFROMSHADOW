@@ -4,9 +4,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const paper = document.getElementById('printer-paper');
   const printerBody = document.querySelector('.printer-body');
   
+  // 检查元素是否存在
+  if (!paper) {
+    console.log('Printer paper element not found, skipping printer animation');
+    return;
+  }
+  
   // 页面加载完成后隐藏噪音遮罩
   setTimeout(() => {
-    loader.classList.add('hidden');
+    if (loader) {
+      loader.classList.add('hidden');
+    }
     // 开始打印动画
     setTimeout(startPrinting, 800);
   }, 1500);
@@ -28,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let isPrinting = false;
   
   function startPrinting() {
-    if (isPrinting) return;
+    if (isPrinting || !paper) return;
     isPrinting = true;
     printNextLine();
   }
@@ -79,7 +87,9 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       // 打印完成
       setTimeout(() => {
-        paper.classList.add('complete');
+        if (paper) {
+          paper.classList.add('complete');
+        }
         isPrinting = false;
       }, 500);
     }
@@ -89,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const printerButton = document.querySelector('.printer-button');
   if (printerButton) {
     printerButton.addEventListener('click', () => {
-      if (!isPrinting) {
+      if (!isPrinting && paper) {
         // 清空纸张
         paper.innerHTML = '';
         paper.style.minHeight = '0';
@@ -125,3 +135,4 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 /* ========== BLOCK: Vinyl Player Interaction END ========== */
+
