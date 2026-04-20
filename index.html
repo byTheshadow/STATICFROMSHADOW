@@ -115,264 +115,200 @@
   <div id="loader" class="noise-overlay"></div>
   <!-- ========== BLOCK: Noise Loader Overlay END ========== -->
 
-  <!-- ========== BLOCK: Navigation START ========== -->
-  <nav class="main-nav">
-    <div class="nav-container">
-      <div class="nav-logo">
-        <span class="logo-main">STATIC FROM SHADOW</span>
-        <span class="logo-sub">Vol.∞</span>
-      </div>
-      <ul class="nav-menu">
-        <li><a href="#about" class="nav-link active" data-section="about">ABOUT</a></li>
-        <li><a href="#characters" class="nav-link" data-section="characters">角色档案</a></li>
-        <li><a href="#beautify" class="nav-link" data-section="beautify">美化拼贴</a></li>
-        <li><a href="#presets" class="nav-link" data-section="presets">预设磁带</a></li>
-        <li><a href="#plugins" class="nav-link" data-section="plugins">插件黑胶</a></li>
-        <li><a href="#projects" class="nav-link" data-section="projects">传送终端</a></li>
-      </ul>
-      <button class="nav-toggle" aria-label="切换菜单">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-    </div>
-  </nav>
-  <!-- ========== BLOCK: Navigation END ========== -->
-
-  <!-- ========== BLOCK: Main Content START ========== -->
-  <main class="main-content">
+  <!-- 主容器 -->
+  <div id="app" class="app-container" style="display: none;">
     
-    <!-- ========== SECTION: About Me START ========== -->
-    <section id="about" class="content-section active">
-      <div class="hero-section">
-        
-        <!-- 背景大图 -->
-        <div class="background-image-container">
-          <img src="assets/images/hero-bg.jpg" alt="Livehouse 现场">
-          <div class="vignette-overlay"></div>
-          <div class="grain-overlay"></div>
-          <div class="light-sweep-effect"></div>
+    <!-- 导航栏 -->
+    <nav class="main-nav">
+      <div class="nav-container">
+        <div class="nav-logo">
+          <h1 class="logo-text">
+            <span class="logo-main">STATIC FROM SHADOW</span>
+            <span class="logo-sub">玉元一的噪音档案</span>
+          </h1>
         </div>
         
-        <!-- 中心焦点：喵喵机 -->
-        <div class="miaomiao-printer">
-          <div class="printer-body">
-            <div class="printer-slot"></div>
-            <button class="printer-button" aria-label="重新打印"></button>
-          </div>
-          <div class="printer-paper-wrapper">
-            <div id="printer-paper"></div>
-          </div>
-        </div>
-        
-        <!-- 周围装饰元素 -->
-        <div class="decorations">
-          
-          <!-- 音符串 - 左上 -->
-          <div class="music-notes top-left" style="--rotate: -15deg;">
-            <svg class="note-svg" viewBox="0 0 30 40" xmlns="http://www.w3.org/2000/svg">
-              <path d="M8 32c0 2.2 1.8 4 4 4s4-1.8 4-4-1.8-4-4-4-4 1.8-4 4zm6-28v24h2V4h-2z"/>
-            </svg>
-            <svg class="note-svg" viewBox="0 0 30 40" xmlns="http://www.w3.org/2000/svg">
-              <path d="M8 32c0 2.2 1.8 4 4 4s4-1.8 4-4-1.8-4-4-4-4 1.8-4 4zm6-28v24h2V4h-2z"/>
-            </svg>
-            <svg class="note-svg" viewBox="0 0 30 40" xmlns="http://www.w3.org/2000/svg">
-              <path d="M8 32c0 2.2 1.8 4 4 4s4-1.8 4-4-1.8-4-4-4-4 1.8-4 4zm6-28v24h2V4h-2z"/>
-            </svg>
-          </div>
-          
-          <!-- 音符串 - 右上 -->
-          <div class="music-notes top-right" style="--rotate: 12deg;">
-            <svg class="note-svg" viewBox="0 0 30 40" xmlns="http://www.w3.org/2000/svg">
-              <path d="M8 32c0 2.2 1.8 4 4 4s4-1.8 4-4-1.8-4-4-4-4 1.8-4 4zm6-28v24h2V4h-2z"/>
-            </svg>
-            <svg class="note-svg" viewBox="0 0 30 40" xmlns="http://www.w3.org/2000/svg">
-              <path d="M8 32c0 2.2 1.8 4 4 4s4-1.8 4-4-1.8-4-4-4-4 1.8-4 4zm6-28v24h2V4h-2z"/>
-            </svg>
-          </div>
-          
-          <!-- 音符串 - 左下 -->
-          <div class="music-notes bottom-left" style="--rotate: 8deg;">
-            <svg class="note-svg" viewBox="0 0 30 40" xmlns="http://www.w3.org/2000/svg">
-              <path d="M8 32c0 2.2 1.8 4 4 4s4-1.8 4-4-1.8-4-4-4-4 1.8-4 4zm6-28v24h2V4h-2z"/>
-            </svg>
-            <svg class="note-svg" viewBox="0 0 30 40" xmlns="http://www.w3.org/2000/svg">
-              <path d="M8 32c0 2.2 1.8 4 4 4s4-1.8 4-4-1.8-4-4-4-4 1.8-4 4zm6-28v24h2V4h-2z"/>
-            </svg>
-          </div>
-          
-          <!-- 音符串 - 右下 -->
-          <div class="music-notes bottom-right" style="--rotate: -10deg;">
-            <svg class="note-svg" viewBox="0 0 30 40" xmlns="http://www.w3.org/2000/svg">
-              <path d="M8 32c0 2.2 1.8 4 4 4s4-1.8 4-4-1.8-4-4-4-4 1.8-4 4zm6-28v24h2V4h-2z"/>
-            </svg>
-            <svg class="note-svg" viewBox="0 0 30 40" xmlns="http://www.w3.org/2000/svg">
-              <path d="M8 32c0 2.2 1.8 4 4 4s4-1.8 4-4-1.8-4-4-4-4 1.8-4 4zm6-28v24h2V4h-2z"/>
-            </svg>
-          </div>
-          
-          <!-- 五线谱 - 左侧 -->
-          <div class="staff-lines left">
-            <div class="staff-line"></div>
-            <div class="staff-line"></div>
-            <div class="staff-line"></div>
-            <div class="staff-line"></div>
-            <div class="staff-line"></div>
-          </div>
-          
-          <!-- 五线谱 - 右侧 -->
-          <div class="staff-lines right">
-            <div class="staff-line"></div>
-            <div class="staff-line"></div>
-            <div class="staff-line"></div>
-            <div class="staff-line"></div>
-            <div class="staff-line"></div>
-          </div>
-          
-          <!-- 黑胶唱片 -->
-          <div id="vinyl-player" class="vinyl-container">
-            <div class="vinyl-record">
-              <div class="vinyl-grooves"></div>
-            </div>
-            <div class="vinyl-arm"></div>
-            <audio id="ambient-noise" src="assets/audio/ambient.mp3" loop></audio>
-          </div>
-          
-          <!-- 票根便签 -->
-          <div class="sticker sticker-ticket">
-            <div class="tape-strip"></div>
-            <p class="handwriting-font">Tonight<br>@ The Shadow</p>
-          </div>
-          
-        </div>
-        
-      </div>
-    </section>
-    <!-- ========== SECTION: About Me END ========== -->
+        <ul class="nav-menu" id="nav-menu">
+          <li><a href="#about" class="nav-link active" data-section="about">About Me</a></li>
+          <li><a href="#characters" class="nav-link" data-section="characters">角色卡</a></li>
+          <li><a href="#beautify" class="nav-link" data-section="beautify">美化</a></li>
+          <li><a href="#presets" class="nav-link" data-section="presets">预设</a></li>
+          <li><a href="#plugins" class="nav-link" data-section="plugins">插件</a></li>
+          <li><a href="#projects" class="nav-link" data-section="projects">其他项目</a></li>
+        </ul>
 
-    <!-- ========== SECTION: Characters START ========== -->
-    <section id="characters" class="content-section">
-      <div class="section-container">
-        <header class="section-header">
-          <h2 class="section-title">
-            <span class="title-number">01</span>
-            <span class="title-text">角色档案馆</span>
-            <span class="title-en">CHARACTER ARCHIVE</span>
-          </h2>
-          <div class="section-filter" id="character-filter">
-            <!-- 标签过滤器由 JS 动态生成 -->
-          </div>
-        </header>
-        <div class="character-grid" id="character-grid">
-          <!-- 角色卡由 loader.js 从 characters.json 加载 -->
-        </div>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
       </div>
-    </section>
-    <!-- ========== SECTION: Characters END ========== -->
+    </nav>
 
-    <!-- ========== SECTION: Beautify START ========== -->
-    <section id="beautify" class="content-section">
-      <div class="section-container">
-        <header class="section-header">
-          <h2 class="section-title">
-            <span class="title-number">02</span>
-            <span class="title-text">美化拼贴墙</span>
-            <span class="title-en">BEAUTIFY COLLAGE</span>
-          </h2>
-          <div class="section-controls">
-            <div class="section-filter" id="beautify-filter">
-              <!-- 标签过滤器 -->
+    <!-- 主内容区 -->
+    <main class="main-content">
+      
+      <!-- About Me Section -->
+      <section id="about-section" class="content-section active">
+        <div class="about-container">
+          <!-- AI 对话风格界面 -->
+          <div class="ai-chat-interface">
+            <div class="chat-header">
+              <div class="chat-avatar">
+                <div class="avatar-icon">◈</div>
+              </div>
+              <div class="chat-title">
+                <h2>Shadow Archives</h2>
+                <p class="chat-status">
+                  <span class="status-dot"></span>
+                  Online
+                </p>
+              </div>
             </div>
-            <div class="section-sort">
-              <button class="sort-btn active" data-sort="latest">最新</button>
-              <button class="sort-btn" data-sort="oldest">最旧</button>
-              <button class="sort-btn" data-sort="random">随机</button>
+
+            <div class="chat-messages" id="about-messages">
+              <!-- 消息将通过 JS 动态加载 -->
+            </div>
+
+            <div class="chat-input-area">
+              <div class="input-wrapper">
+                <input type="text" class="chat-input" placeholder="Type your message..." disabled>
+                <button class="send-btn" disabled>
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M2 10L18 2L10 18L8 11L2 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+              </div>
+              <p class="input-hint">This is a read-only archive interface</p>
             </div>
           </div>
-        </header>
-        <div class="beautify-masonry" id="beautify-grid">
-          <!-- 美化图由 loader.js 从 beautify.json 加载 -->
         </div>
-      </div>
-    </section>
-    <!-- ========== SECTION: Beautify END ========== -->
+      </section>
 
-    <!-- ========== SECTION: Presets START ========== -->
-    <section id="presets" class="content-section">
-      <div class="section-container">
-        <header class="section-header">
-          <h2 class="section-title">
-            <span class="title-number">03</span>
-            <span class="title-text">预设磁带柜</span>
-            <span class="title-en">PRESET TAPES</span>
-          </h2>
-        </header>
-        <div class="preset-tabs" id="preset-tabs">
-          <!-- 预设标签页由 JS 生成 -->
+      <!-- Characters Section -->
+      <section id="characters-section" class="content-section">
+        <div class="section-header-block">
+          <h2 class="section-title">角色档案馆</h2>
+          <p class="section-subtitle">Character Archives</p>
         </div>
-        <div class="preset-content" id="preset-content">
-          <!-- 预设内容由 loader.js 从 presets.json 加载 -->
-        </div>
-      </div>
-    </section>
-    <!-- ========== SECTION: Presets END ========== -->
 
-    <!-- ========== SECTION: Plugins START ========== -->
-    <section id="plugins" class="content-section">
-      <div class="section-container">
-        <header class="section-header">
-          <h2 class="section-title">
-            <span class="title-number">04</span>
-            <span class="title-text">插件黑胶架</span>
-            <span class="title-en">PLUGIN VINYLS</span>
-          </h2>
-        </header>
+        <!-- Tag 筛选 -->
+        <div class="filter-bar" id="character-filters">
+          <button class="filter-tag active" data-tag="all">全部</button>
+          <!-- 其他 tags 将通过 JS 动态生成 -->
+        </div>
+
+        <!-- 角色卡网格 -->
+        <div class="characters-grid" id="characters-grid">
+          <!-- 角色卡将通过 JS 动态加载 -->
+        </div>
+      </section>
+
+      <!-- Beautify Section -->
+      <section id="beautify-section" class="content-section">
+        <div class="section-header-block">
+          <h2 class="section-title">美化拼贴墙</h2>
+          <p class="section-subtitle">Beautify Gallery</p>
+        </div>
+
+        <!-- 分类导航 -->
+        <div class="category-nav" id="beautify-categories">
+          <!-- 分类将通过 JS 动态加载 -->
+        </div>
+
+        <!-- 瀑布流网格 -->
+        <div class="masonry-grid" id="beautify-grid">
+          <!-- 美化图将通过 JS 动态加载 -->
+        </div>
+      </section>
+
+      <!-- Presets Section -->
+      <section id="presets-section" class="content-section">
+        <div class="section-header-block">
+          <h2 class="section-title">预设磁带柜</h2>
+          <p class="section-subtitle">Preset Cassette Cabinet</p>
+        </div>
+
+        <div class="presets-container" id="presets-container">
+          <!-- 预设将通过 JS 动态加载 -->
+        </div>
+      </section>
+
+      <!-- Plugins Section -->
+      <section id="plugins-section" class="content-section">
+        <div class="section-header-block">
+          <h2 class="section-title">插件黑胶架</h2>
+          <p class="section-subtitle">Plugin Vinyl Shelf</p>
+        </div>
+
         <div class="vinyl-shelf" id="vinyl-shelf">
-          <!-- 插件黑胶由 loader.js 从 plugins.json 加载 -->
+          <!-- 插件将通过 JS 动态加载 -->
         </div>
-      </div>
-    </section>
-    <!-- ========== SECTION: Plugins END ========== -->
+      </section>
 
-    <!-- ========== SECTION: Projects START ========== -->
-    <section id="projects" class="content-section">
-      <div class="section-container">
-        <header class="section-header">
-          <h2 class="section-title">
-            <span class="title-number">05</span>
-            <span class="title-text">传送终端</span>
-            <span class="title-en">TRANSMISSION TERMINAL</span>
-          </h2>
-        </header>
-        <div class="terminal-window">
+      <!-- Projects Section -->
+      <section id="projects-section" class="content-section">
+        <div class="section-header-block">
+          <h2 class="section-title">其他项目终端</h2>
+          <p class="section-subtitle">Project Terminal</p>
+        </div>
+
+        <div class="terminal-container" id="terminal-container">
           <div class="terminal-header">
             <span class="terminal-dot red"></span>
             <span class="terminal-dot yellow"></span>
             <span class="terminal-dot green"></span>
-            <span class="terminal-title">vibe_coding_projects.sh</span>
+            <span class="terminal-title">shadow@archives:~$</span>
           </div>
           <div class="terminal-body" id="terminal-body">
-            <!-- 项目链接由 loader.js 从 projects.json 加载 -->
+            <!-- 项目命令将通过 JS 动态加载 -->
           </div>
         </div>
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+      <div class="footer-content">
+        <p class="footer-text">
+          © 2026 玉元一 shadow | STATIC FROM SHADOW
+        </p>
+        <p class="footer-disclaimer">
+          *免责声明：文案是我觉得很帅很喜欢才放的，如果有老师不喜欢、觉得言辞不合适，可以联系我，我会删掉的感谢老师们*
+        </p>
       </div>
-    </section>
-    <!-- ========== SECTION: Projects END ========== -->
+    </footer>
 
-  </main>
-  <!-- ========== BLOCK: Main Content END ========== -->
-
-  <!-- ========== BLOCK: Lightbox Modal START ========== -->
-  <div class="lightbox" id="lightbox">
-    <button class="lightbox-close" aria-label="关闭">&times;</button>
-    <div class="lightbox-content">
-      <img src="" alt="" id="lightbox-img">
-      <div class="lightbox-info" id="lightbox-info"></div>
-    </div>
-    <button class="lightbox-nav prev" aria-label="上一张">‹</button>
-    <button class="lightbox-nav next" aria-label="下一张">›</button>
   </div>
-  <!-- ========== BLOCK: Lightbox Modal END ========== -->
+
+  <!-- 角色卡 Modal -->
+  <div id="character-modal" class="modal">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+      <button class="modal-close" aria-label="Close modal">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+      <div id="character-modal-body" class="modal-body">
+        <!-- 角色详情将通过 JS 动态加载 -->
+      </div>
+    </div>
+  </div>
+
+  <!-- 图片灯箱 -->
+  <div id="lightbox" class="lightbox">
+    <div class="lightbox-overlay"></div>
+    <button class="lightbox-close" aria-label="Close lightbox">×</button>
+    <div class="lightbox-content">
+      <img id="lightbox-image" src="" alt="">
+      <div class="lightbox-caption" id="lightbox-caption"></div>
+    </div>
+    <button class="lightbox-nav lightbox-prev" aria-label="Previous image">‹</button>
+    <button class="lightbox-nav lightbox-next" aria-label="Next image">›</button>
+  </div>
+
 
   <!-- Scripts -->
   <script src="js/pacman-opening.js"></script>
