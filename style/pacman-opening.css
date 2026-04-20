@@ -207,6 +207,8 @@
 
 /* ================== 文字动画 ================== */
 
+/* ================== 文字动画 ================== */
+
 /* 文字容器 - 修复初始状态 */
 .opening-text {
   position: absolute;
@@ -223,7 +225,6 @@
 .opening-text:not(.hidden) {
   opacity: 1;
 }
-
 
 /* 404 文字 - 8-bit 像素风 + 故障抖动 */
 .text-404 {
@@ -264,19 +265,210 @@
   50%, 100% { opacity: 0; }
 }
 
-/* Wait Really 文字 - 狂放的记号笔手写感 */
-.text-wait {
-  font-family: 'Permanent Marker', cursive;
-  font-size: clamp(2rem, 6vw, 4rem);
-  color: #d7d7d7;
-  transform: rotate(-5deg);
-  animation: waitIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+/* ========== 老旧电视机恐怖消息弹窗效果 ========== */
+
+/* 电视机外壳 */
+.tv-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  max-width: 90vw;
+  padding: 40px;
+  background: linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%);
+  border-radius: 20px;
+  box-shadow: 
+    0 0 0 12px #3a3a3a,
+    0 0 0 15px #1a1a1a,
+    inset 0 20px 40px rgba(0,0,0,0.6),
+    0 20px 50px rgba(0,0,0,0.8);
   opacity: 0;
+  z-index: 20;
 }
 
-@keyframes waitIn {
-  0% { opacity: 0; transform: translateY(50px) rotate(-15deg) scale(0.8); }
-  100% { opacity: 1; transform: translateY(0) rotate(-5deg) scale(1); }
+/* 电视屏幕 */
+.tv-screen {
+  position: relative;
+  background: #0a0a0a;
+  border-radius: 10px;
+  padding: 60px 40px;
+  box-shadow: inset 0 0 50px rgba(0,0,0,0.9);
+  overflow: hidden;
+}
+
+/* 扫描线效果 */
+.tv-screen::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(255,255,255,0.03) 0px,
+    rgba(255,255,255,0.03) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  pointer-events: none;
+  animation: scanlines 8s linear infinite;
+  z-index: 10;
+}
+
+@keyframes scanlines {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(100px); }
+}
+
+/* 闪烁雪花噪点 */
+.tv-screen::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAMAAAAp4XiDAAAAUVBMVEUAAAD///+AgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC2pHWDAAAAAXRSTlMAQObYZgAAAAFiS0dEAIgFHUgAAAAJcEhZcwAACxMAAAsTAQCanBgAAAAHdElNRQfiBRUPMCo1rS4sAAAANElEQVRIx+3MMREAAAgEsC2h/QsDOYdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAvNtqAAAB8AABbgGXLgAAAABJRU5ErkJggg==');
+  opacity: 0.03;
+  animation: staticNoise 0.2s steps(2) infinite;
+  pointer-events: none;
+  z-index: 11;
+}
+
+@keyframes staticNoise {
+  0% { transform: translate(0, 0); }
+  50% { transform: translate(2px, -2px); }
+  100% { transform: translate(-2px, 2px); }
+}
+
+/* 屏幕光晕 */
+.tv-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, rgba(0,255,0,0.1) 0%, transparent 70%);
+  pointer-events: none;
+  animation: tvGlow 3s ease-in-out infinite;
+  z-index: 5;
+}
+
+@keyframes tvGlow {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 0.8; }
+}
+
+/* 消息气泡 - 手机聊天风格 */
+.message-bubble {
+  position: relative;
+  background: rgba(30, 30, 30, 0.9);
+  border: 2px solid #00ff00;
+  border-radius: 18px;
+  padding: 20px 25px;
+  margin-bottom: 20px;
+  max-width: 80%;
+  opacity: 0;
+  transform: translateY(20px) scale(0.9);
+  box-shadow: 
+    0 0 20px rgba(0,255,0,0.3),
+    inset 0 0 20px rgba(0,255,0,0.1);
+}
+
+/* 聊天尾巴 */
+.message-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 30px;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid #00ff00;
+}
+
+.message-bubble::before {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 32px;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid rgba(30, 30, 30, 0.9);
+  z-index: 1;
+}
+
+/* 消息文字 */
+.message-text {
+  font-family: 'Space Mono', monospace;
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  color: #00ff00;
+  text-shadow: 0 0 10px rgba(0,255,0,0.5);
+  letter-spacing: 0.05em;
+  position: relative;
+  z-index: 12;
+}
+
+/* 打字机效果 */
+.typing-cursor {
+  display: inline-block;
+  width: 3px;
+  height: 1.2em;
+  background: #00ff00;
+  margin-left: 5px;
+  animation: cursorBlink 0.8s infinite;
+  vertical-align: middle;
+}
+
+@keyframes cursorBlink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+/* 消息出现动画 */
+.message-bubble.show {
+  animation: messageSlideIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes messageSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* 电视机抖动效果 */
+.tv-container.glitch {
+  animation: tvShake 0.3s infinite;
+}
+
+@keyframes tvShake {
+  0%, 100% { transform: translate(-50%, -50%); }
+  25% { transform: translate(calc(-50% - 3px), calc(-50% + 2px)); }
+  50% { transform: translate(calc(-50% + 2px), calc(-50% - 3px)); }
+  75% { transform: translate(calc(-50% - 2px), calc(-50% - 2px)); }
+}
+
+/* 电视机出现动画 */
+.tv-container.power-on {
+  animation: tvPowerOn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes tvPowerOn {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.1, 0.001);
+    filter: brightness(5);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.05, 0.05);
+    filter: brightness(3);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1, 1);
+    filter: brightness(1);
+  }
 }
 
 /* Welcome 文字 - 华丽暗黑的古典哥特体 */
@@ -299,7 +491,7 @@
 
 /* 中文副标题 - 现代酸性排版：极细体 */
 .text-subtitle {
-  font-family: 'ZCOOL QingKe HuangYou', 'Noto Sans SC', sans-serif;
+  font-family: 'LXGW Bright', sans-serif;
   font-weight: 300;
   font-size: clamp(1.2rem, 3vw, 2rem);
   color: #ff4757;
@@ -364,14 +556,6 @@
 /* 隐藏状态 */
 .hidden {
   display: none !important;
-}
-/* 确保开屏动画不影响鼠标显示 */
-.opening-screen * {
-  cursor: default;
-}
-
-.opening-screen .skip-button {
-  cursor: pointer;
 }
 
 
