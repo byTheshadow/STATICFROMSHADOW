@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => elements.flash.classList.remove('active'), 500);
   }, 4000));
 
-   // ⏱️ 3. 老旧电视机开机，显示恐怖消息 (5.5s)
+  // ⏱️ 3. 老旧电视机开机，显示恐怖消息 (5.5s)
   timeline.push(setTimeout(() => {
     elements.text404.style.opacity = '0';
     setTimeout(() => {
@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
       elements.textWait.classList.remove('hidden');
       elements.textWait.classList.add('power-on');
       
-      // 第一条消息："wait"
+      // 第一条消息："wait" (电视机开机后 0.8s)
       setTimeout(() => {
         const msgWait = document.getElementById('msg-wait');
         msgWait.classList.add('show');
@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => elements.textWait.classList.remove('glitch'), 300);
       }, 800);
       
-      // 第二条消息："really?" (延迟1秒出现)
+      // 第二条消息："really?" (电视机开机后 2.3s)
       setTimeout(() => {
         const msgReally = document.getElementById('msg-really');
         msgReally.classList.add('show');
@@ -88,14 +88,17 @@ document.addEventListener('DOMContentLoaded', () => {
         // 再次抖动
         elements.textWait.classList.add('glitch');
         setTimeout(() => elements.textWait.classList.remove('glitch'), 300);
-      }, 1800);
+      }, 2300);
       
     }, 300);
   }, 5500));
 
-  // ⏱️ 4. 幽灵转身，显示 WELCOME TO SHADOW'S PLACE!! (8s - 延长0.5秒给消息更多展示时间)
+  // ⏱️ 4. 幽灵转身，显示 WELCOME TO SHADOW'S PLACE!! (9.5s - 给足够时间展示两条消息)
   timeline.push(setTimeout(() => {
+    // 电视机淡出
     elements.textWait.style.opacity = '0';
+    elements.textWait.style.transition = 'opacity 0.5s ease';
+    
     setTimeout(() => {
       elements.textWait.classList.add('hidden');
       
@@ -108,38 +111,19 @@ document.addEventListener('DOMContentLoaded', () => {
       // 显示欢迎文字
       elements.textWelcome.classList.remove('hidden');
       elements.textWelcome.style.opacity = '1';
-    }, 300);
-  }, 8000));
+    }, 500);
+  }, 9500));
 
-
-  // ⏱️ 4. 幽灵转身，显示 WELCOME TO SHADOW'S PLACE!! (7s)
-  timeline.push(setTimeout(() => {
-    elements.textWait.style.opacity = '0';
-    setTimeout(() => {
-      elements.textWait.classList.add('hidden');
-      
-      // 幽灵重新出现并转身
-      elements.ghost.classList.remove('hidden', 'moving');
-      elements.ghost.style.left = '50%';
-      elements.ghost.style.top = '50%';
-      elements.ghost.classList.add('turn-around');
-      
-      // 显示欢迎文字
-      elements.textWelcome.classList.remove('hidden');
-      elements.textWelcome.style.opacity = '1';
-    }, 300);
-  }, 7000));
-
-  // ⏱️ 5. 幽灵消散成粒子 (9s)
+  // ⏱️ 5. 幽灵消散成粒子 (11.5s)
   timeline.push(setTimeout(() => {
     elements.ghost.classList.add('dissolve');
     createParticles();
-  }, 9000));
+  }, 11500));
 
-  // ⏱️ 6. 画面撕裂进入主界面 (10.5s)
+  // ⏱️ 6. 画面撕裂进入主界面 (13s)
   timeline.push(setTimeout(() => {
     finishOpening();
-  }, 10500));
+  }, 13000));
 
   // 🎮 交互：支持跳过动画
   elements.skipBtn.addEventListener('click', finishOpening);
@@ -168,6 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /* ========== BLOCK: Pacman Ghost Opening Animation Script END ========== */
+
 
 
 
