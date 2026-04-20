@@ -26,14 +26,30 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const finishOpening = () => {
-    clearTimeline();
-    elements.screen.classList.add('finished');
+  clearTimeline();
+  elements.screen.classList.add('finished');
+  
+  setTimeout(() => {
+    elements.screen.remove();
     
-    setTimeout(() => {
-      elements.screen.remove();
-      document.dispatchEvent(new CustomEvent('openingComplete'));
-    }, 800);
-  };
+    // 显示主内容区域
+    const app = document.getElementById('app');
+    if (app) {
+      app.style.display = 'block';
+      // 添加淡入动画
+      requestAnimationFrame(() => {
+        app.style.opacity = '0';
+        app.style.transition = 'opacity 0.6s ease';
+        requestAnimationFrame(() => {
+          app.style.opacity = '1';
+        });
+      });
+    }
+    
+    document.dispatchEvent(new CustomEvent('openingComplete'));
+  }, 800);
+};
+
 
   // ⏱️ 1. 幽灵开始移动并吃豆豆 (0-3s)
   elements.ghost.classList.add('moving');
