@@ -1,54 +1,91 @@
 /* ========== BLOCK: Premium Aesthetic Fonts START ========== */
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Permanent+Marker&family=UnifrakturMaguntia&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Noto+Sans+SC:wght@100;300;900&family=ZCOOL+QingKe+HuangYou&display=swap');
+
+/* Google Fonts 英文字体 */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Mountains+of+Christmas:wght@400;700&family=Risque&family=Underdog&family=UnifrakturCook:wght@700&family=Manufacturing+Consent&family=UnifrakturMaguntia&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
+
+/* 中文字体 - 来自 fontsapi.zeoseven.com */
+/* 打印机体 */
+@import url("https://fontsapi.zeoseven.com/914/main/result.css"); /* Planschrift */
+@import url("https://fontsapi.zeoseven.com/959/main/result.css"); /* XIANGCUIJIXUESONG 相萃极雪宋 */
+
+/* 手写体 */
+@import url("https://fontsapi.zeoseven.com/44/main/result.css");   /* 手写体1 */
+@import url("https://fontsapi.zeoseven.com/501/main/result.css");  /* 平方手书体 */
+@import url("https://fontsapi.zeoseven.com/2102/main/result.css"); /* YouchaSanz Light */
+
+/* 像素体 */
+@import url("https://fontsapi.zeoseven.com/689/main/result.css");  /* ChangBanDianSong 12 */
+
+/* 其他 */
+@import url("https://fontsapi.zeoseven.com/993/main/result.css");  /* LXGW Bright */
 
 :root {
+  /* ===== 英文字体 ===== */
   /* 1. 游戏/像素体 - 8-bit感 */
   --font-pixel: 'Press Start 2P', monospace;
   
-  /* 2. 纯正哥特体 - 华丽暗黑感 */
-  --font-gothic: 'UnifrakturMaguntia', serif;
+  /* 2. 哥特体系列 */
+  --font-gothic-1: 'UnifrakturMaguntia', serif;
+  --font-gothic-2: 'UnifrakturCook', serif;
+  --font-gothic-modern: 'Manufacturing Consent', serif;
   
-  /* 3. 记号笔/涂鸦 - 狂放手写感 */
-  --font-marker: 'Permanent Marker', cursive;
+  /* 3. 怪诞英文 */
+  --font-creepy-1: 'Mountains of Christmas', cursive;
+  --font-creepy-2: 'Risque', cursive;
   
-  /* 4. 等宽科技 - 极简主义、黑客/终端感 */
+  /* 4. 可爱英文 */
+  --font-cute: 'Underdog', cursive;
+  
+  /* 5. 等宽科技 - 极简主义、黑客/终端感 */
   --font-tech: 'Space Mono', monospace;
   
-  /* 5. 中文酸性现代（极细/异形） 
-     Noto Sans SC 100/300 极细体带来高级感
-     ZCOOL QingKe HuangYou 站酷庆科黄油体，瘦长挺拔，有酸性排版的先锋感 
-  */
-  --font-acid-cn: 'ZCOOL QingKe HuangYou', 'Noto Sans SC', sans-serif;
-  --font-thin-cn: 'Noto Sans SC', sans-serif;
+  /* ===== 中文字体 ===== */
+  /* 1. 打印机体 */
+  --font-printer-1: 'Planschrift', serif;
+  --font-printer-2: 'XIANGCUIJIXUESONG', serif;
   
-  /* 覆盖全局基础字体 */
+  /* 2. 手写体 */
+  --font-handwriting-1: '平方手书体', cursive;
+  --font-handwriting-2: 'YouchaSanz Light', cursive;
+  
+  /* 3. 像素体中文 */
+  --font-pixel-cn: 'ChangBanDianSong 12', monospace;
+  
+  /* 4. 通用中文 */
+  --font-cn-modern: 'LXGW Bright', sans-serif;
+  
+  /* ===== 应用场景映射 ===== */
   --font-body-en: var(--font-tech);
-  --font-title-cn: var(--font-acid-cn);
-  --font-title-en: var(--font-gothic);
+  --font-title-en: var(--font-gothic-1);
+  --font-title-cn: var(--font-cn-modern);
+  --font-printer-text: var(--font-printer-1);
+  --font-handwrite-cn: var(--font-handwriting-1);
 }
 
-/* 全局字体应用强化 */
+/* 全局字体应用 */
 body, button, input {
   font-family: var(--font-tech);
 }
 
+/* 标题使用现代中文字体 */
 h1, h2, h3, .title-text {
-  font-family: var(--font-acid-cn);
+  font-family: var(--font-title-cn);
   letter-spacing: 0.05em;
-  font-weight: 400; /* 黄油体本身够细长，不需要加粗 */
+  font-weight: 400;
 }
 
-/* 极细的现代感正文中文 */
-.about-intro, .description-text, .hero-subtitle {
-  font-family: var(--font-thin-cn);
-  font-weight: 300; /* 极细体 */
-  letter-spacing: 0.1em;
+/* 打印机纸张内容使用打印机体 */
+#printer-paper, .printer-content {
+  font-family: var(--font-printer-text);
+  font-weight: normal;
 }
 
+/* 英文标题使用哥特体 */
 .title-en, .logo-main, .title-number {
-  font-family: var(--font-gothic);
+  font-family: var(--font-title-en);
 }
 
+/* 导航链接使用科技等宽体 */
 .nav-link {
   font-family: var(--font-tech);
   font-weight: 700;
@@ -56,8 +93,20 @@ h1, h2, h3, .title-text {
   letter-spacing: 0.1em;
 }
 
+/* 手写字体 */
 .handwriting-font {
-  font-family: var(--font-marker);
+  font-family: var(--font-handwrite-cn);
+}
+
+/* 像素字体 */
+.pixel-font {
+  font-family: var(--font-pixel);
+}
+
+/* 描述文本使用现代中文 */
+.about-intro, .description-text, .hero-subtitle {
+  font-family: var(--font-cn-modern);
+  font-weight: 300;
+  letter-spacing: 0.05em;
 }
 /* ========== BLOCK: Premium Aesthetic Fonts END ========== */
-
