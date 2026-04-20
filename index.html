@@ -17,9 +17,11 @@
 </head>
 
 <body>
-  <!-- 鼠标特效元素 -->
+  <!-- ========== 鼠标特效元素 ========== -->
+  <!-- 物理反相聚光灯 -->
   <div id="spotlight"></div>
   
+  <!-- X轴跟随小幽灵 -->
   <div id="ghost-tracker">
     <div class="tracker-body">
       <div class="tracker-eyes">
@@ -28,34 +30,306 @@
       </div>
     </div>
   </div>
-
-  <!-- 其他内容保持不变 -->
+  <!-- ===================================== -->
   
-  <!-- Scripts - 按正确顺序加载 -->
+  <!-- ========== 吃豆人开屏动画 (Pacman Opening) ========== -->
+  <div class="opening-screen" id="opening-screen">
+    <div class="game-container" id="game-container">
+      <!-- 迷宫与豆豆 -->
+      <div class="maze-bg" id="maze-bg"></div>
+      <div class="dots-path" id="dots-path">
+        <div class="dot" style="left: 20%;"></div>
+        <div class="dot" style="left: 40%;"></div>
+        <div class="dot" style="left: 60%;"></div>
+        <div class="dot" style="left: 80%;"></div>
+      </div>
+      
+      <!-- 幽灵本体 -->
+      <div class="ghost" id="ghost">
+        <div class="ghost-body">
+          <div class="ghost-eyes">
+            <div class="ghost-eye"></div>
+            <div class="ghost-eye"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 屏幕闪烁白光 -->
+    <div class="screen-flash" id="screen-flash"></div>
+
+    <!-- 阶段一文字：404 故障 -->
+    <div class="opening-text hidden" id="text-404">
+      <div class="text-404">404</div>
+      <div class="text-not-found">NOT FOUND!!</div>
+    </div>
+    
+    <!-- 阶段二文字：老旧电视机恐怖消息 -->
+    <div class="tv-container hidden" id="text-wait">
+      <div class="tv-screen">
+        <div class="tv-glow"></div>
+        <div class="message-bubble" id="msg-wait">
+          <div class="message-text">wait<span class="typing-cursor"></span></div>
+        </div>
+        <div class="message-bubble" id="msg-really">
+          <div class="message-text">really?<span class="typing-cursor"></span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 阶段三文字：哥特降临 + 酸性中文 -->
+    <div class="opening-text hidden" id="text-welcome">
+      <div class="text-welcome">WELCOME TO<br>SHADOW'S PLACE!!</div>
+      <div class="text-subtitle">玉元一的噪音档案</div>
+    </div>
+
+    <!-- 跳过按钮 -->
+    <button class="skip-button" id="skip-btn">Skip [Esc]</button>
+  </div>
+  <!-- =================================================== -->
+
+  <!-- ========== BLOCK: Custom Cursor START ========== -->
+  <div class="custom-cursor"></div>
+  <!-- ========== BLOCK: Custom Cursor END ========== -->
+  
+  <!-- ========== BLOCK: Page Transition START ========== -->
+  <div class="page-transition">
+    <div class="tear-strip"></div>
+    <div class="tear-strip"></div>
+    <div class="tear-strip"></div>
+    <div class="tear-strip"></div>
+    <div class="tear-strip"></div>
+    <div class="tear-strip"></div>
+    <div class="tear-strip"></div>
+    <div class="tear-strip"></div>
+    <div class="tear-strip"></div>
+    <div class="tear-strip"></div>
+  </div>
+  <!-- ========== BLOCK: Page Transition END ========== -->
+  
+  <!-- ========== BLOCK: Noise Loader Overlay START ========== -->
+  <div id="loader" class="noise-overlay"></div>
+  <!-- ========== BLOCK: Noise Loader Overlay END ========== -->
+
+  <!-- 主容器 -->
+  <div id="app" class="app-container" style="display: none;">
+    
+    <!-- 导航栏 -->
+    <nav class="main-nav">
+      <div class="nav-container">
+        <div class="nav-logo">
+          <h1 class="logo-text">
+            <span class="logo-main">STATIC FROM SHADOW</span>
+            <span class="logo-sub">玉元一的噪音档案</span>
+          </h1>
+        </div>
+        
+        <ul class="nav-menu" id="nav-menu">
+          <li><a href="#about" class="nav-link active" data-section="about">About Me</a></li>
+          <li><a href="#characters" class="nav-link" data-section="characters">角色卡</a></li>
+          <li><a href="#beautify" class="nav-link" data-section="beautify">美化</a></li>
+          <li><a href="#presets" class="nav-link" data-section="presets">预设</a></li>
+          <li><a href="#plugins" class="nav-link" data-section="plugins">插件</a></li>
+          <li><a href="#projects" class="nav-link" data-section="projects">其他项目</a></li>
+        </ul>
+
+        <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- 主内容区 -->
+    <main class="main-content">
+      
+      <!-- About Me Section -->
+      <section id="about-section" class="content-section active">
+        <div class="about-container">
+          <!-- AI 对话风格界面 -->
+          <div class="ai-chat-interface">
+            <div class="chat-header">
+              <div class="chat-avatar">
+                <div class="avatar-icon">◈</div>
+              </div>
+              <div class="chat-title">
+                <h2>Shadow Archives</h2>
+                <p class="chat-status">
+                  <span class="status-dot"></span>
+                  Online
+                </p>
+              </div>
+            </div>
+
+            <div class="chat-messages" id="about-messages">
+              <!-- 消息将通过 JS 动态加载 -->
+            </div>
+
+            <div class="chat-input-area">
+              <div class="input-wrapper">
+                <input type="text" class="chat-input" placeholder="Type your message..." disabled>
+                <button class="send-btn" disabled>
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M2 10L18 2L10 18L8 11L2 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+              </div>
+              <p class="input-hint">This is a read-only archive interface</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Characters Section -->
+      <section id="characters-section" class="content-section">
+        <div class="section-header-block">
+          <h2 class="section-title">角色档案馆</h2>
+          <p class="section-subtitle">Character Archives</p>
+        </div>
+
+        <!-- Tag 筛选 -->
+        <div class="filter-bar" id="character-filters">
+          <button class="filter-tag active" data-tag="all">全部</button>
+          <!-- 其他 tags 将通过 JS 动态生成 -->
+        </div>
+
+        <!-- 角色卡网格 -->
+        <div class="characters-grid" id="characters-grid">
+          <!-- 角色卡将通过 JS 动态加载 -->
+        </div>
+      </section>
+
+      <!-- Beautify Section -->
+      <section id="beautify-section" class="content-section">
+        <div class="section-header-block">
+          <h2 class="section-title">美化拼贴墙</h2>
+          <p class="section-subtitle">Beautify Gallery</p>
+        </div>
+
+        <!-- 分类导航 -->
+        <div class="category-nav" id="beautify-categories">
+          <!-- 分类将通过 JS 动态加载 -->
+        </div>
+
+        <!-- 瀑布流网格 -->
+        <div class="masonry-grid" id="beautify-grid">
+          <!-- 美化图将通过 JS 动态加载 -->
+        </div>
+      </section>
+
+      <!-- Presets Section -->
+      <section id="presets-section" class="content-section">
+        <div class="section-header-block">
+          <h2 class="section-title">预设磁带柜</h2>
+          <p class="section-subtitle">Preset Cassette Cabinet</p>
+        </div>
+
+        <div class="presets-container" id="presets-container">
+          <!-- 预设将通过 JS 动态加载 -->
+        </div>
+      </section>
+
+      <!-- Plugins Section -->
+      <section id="plugins-section" class="content-section">
+        <div class="section-header-block">
+          <h2 class="section-title">插件黑胶架</h2>
+          <p class="section-subtitle">Plugin Vinyl Shelf</p>
+        </div>
+
+        <div class="vinyl-shelf" id="vinyl-shelf">
+          <!-- 插件将通过 JS 动态加载 -->
+        </div>
+      </section>
+
+      <!-- Projects Section -->
+      <section id="projects-section" class="content-section">
+        <div class="section-header-block">
+          <h2 class="section-title">其他项目终端</h2>
+          <p class="section-subtitle">Project Terminal</p>
+        </div>
+
+        <div class="terminal-container" id="terminal-container">
+          <div class="terminal-header">
+            <span class="terminal-dot red"></span>
+            <span class="terminal-dot yellow"></span>
+            <span class="terminal-dot green"></span>
+            <span class="terminal-title">shadow@archives:~$</span>
+          </div>
+          <div class="terminal-body" id="terminal-body">
+            <!-- 项目命令将通过 JS 动态加载 -->
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+      <div class="footer-content">
+        <p class="footer-text">
+          © 2026 玉元一 shadow | STATIC FROM SHADOW
+        </p>
+        <p class="footer-disclaimer">
+          *免责声明：文案是我觉得很帅很喜欢才放的，如果有老师不喜欢、觉得言辞不合适，可以联系我，我会删掉的感谢老师们*
+        </p>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- 角色卡 Modal -->
+  <div id="character-modal" class="modal">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+      <button class="modal-close" aria-label="Close modal">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+      <div id="character-modal-body" class="modal-body">
+        <!-- 角色详情将通过 JS 动态加载 -->
+      </div>
+    </div>
+  </div>
+
+  <!-- 图片灯箱 -->
+  <div id="lightbox" class="lightbox">
+    <div class="lightbox-overlay"></div>
+    <button class="lightbox-close" aria-label="Close lightbox">×</button>
+    <div class="lightbox-content">
+      <img id="lightbox-image" src="" alt="">
+      <div class="lightbox-caption" id="lightbox-caption"></div>
+    </div>
+    <button class="lightbox-nav lightbox-prev" aria-label="Previous image">‹</button>
+    <button class="lightbox-nav lightbox-next" aria-label="Next image">›</button>
+  </div>
+
+  <!-- Scripts -->
   <script src="js/pacman-opening.js"></script>
   <script src="js/printer.js"></script>
-  <script src="js/about-loader.js"></script>
   <script>
-    // 内联 cursor-effects 逻辑，避免文件加载问题
-    document.addEventListener('DOMContentLoaded', () => {
-      const hasOpening = document.getElementById('opening-screen');
+    // ========== Cursor Effects (Inline) ==========
+    (function() {
+      'use strict';
       
-      const initCursorEffects = () => {
+      function initCursorEffects() {
         const spotlight = document.getElementById('spotlight');
         
         if (spotlight) {
-          document.addEventListener('mousemove', (e) => {
+          document.addEventListener('mousemove', function(e) {
             spotlight.style.left = e.clientX + 'px';
             spotlight.style.top = e.clientY + 'px';
           });
           
-          const interactiveElements = 'a, button, .nav-link, .character-card, .vinyl-record, .printer-button, input, textarea, [onclick]';
+          const interactiveSelector = 'a, button, .nav-link, .character-card, .vinyl-record, .printer-button, input, textarea, [onclick]';
+          const interactiveElements = document.querySelectorAll(interactiveSelector);
           
-          document.querySelectorAll(interactiveElements).forEach(el => {
-            el.addEventListener('mouseenter', () => {
+          interactiveElements.forEach(function(el) {
+            el.addEventListener('mouseenter', function() {
               document.body.classList.add('spotlight-hover');
             });
-            el.addEventListener('mouseleave', () => {
+            el.addEventListener('mouseleave', function() {
               document.body.classList.remove('spotlight-hover');
             });
           });
@@ -64,7 +338,7 @@
         const ghostTracker = document.getElementById('ghost-tracker');
         
         if (ghostTracker) {
-          document.addEventListener('mousemove', (e) => {
+          document.addEventListener('mousemove', function(e) {
             const ghostWidth = ghostTracker.offsetWidth;
             const halfWidth = ghostWidth / 2;
             const viewportWidth = window.innerWidth;
@@ -74,18 +348,24 @@
           
           ghostTracker.style.left = (window.innerWidth / 2) + 'px';
         }
-      };
-      
-      if (hasOpening) {
-        document.addEventListener('openingComplete', initCursorEffects);
-      } else {
-        initCursorEffects();
       }
-    });
+      
+      document.addEventListener('DOMContentLoaded', function() {
+        const hasOpening = document.getElementById('opening-screen');
+        
+        if (hasOpening) {
+          document.addEventListener('openingComplete', initCursorEffects);
+        } else {
+          initCursorEffects();
+        }
+      });
+    })();
   </script>
+  <script src="js/about-loader.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>
+
 
 
 <body>
