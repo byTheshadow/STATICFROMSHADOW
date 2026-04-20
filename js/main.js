@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // 切换section
       sections.forEach(section => {
         section.classList.remove('active');
-        if (section.id === targetId) {
+        if (section.id === `${targetId}-section`) {
           section.classList.add('active');
         }
       });
@@ -45,7 +45,30 @@ document.addEventListener('DOMContentLoaded', () => {
   function createStaticTransition() {
     const div = document.createElement('div');
     div.className = 'static-transition';
+    div.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--bg-base);
+      z-index: 10000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    `;
     document.body.appendChild(div);
+    
+    // 添加激活状态的样式
+    const style = document.createElement('style');
+    style.textContent = `
+      .static-transition.active {
+        opacity: 1;
+        pointer-events: all;
+      }
+    `;
+    document.head.appendChild(style);
+    
     return div;
   }
 
@@ -92,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const navToggle = document.querySelector('.nav-toggle');
   const navMenu = document.querySelector('.nav-menu');
 
-  if (navToggle) {
+  if (navToggle && navMenu) {
     navToggle.addEventListener('click', () => {
       navMenu.classList.toggle('active');
     });
@@ -104,16 +127,20 @@ document.addEventListener('DOMContentLoaded', () => {
 // ========== BLOCK: Lightbox Functionality START ==========
 
 const lightbox = document.getElementById('lightbox');
-const lightboxImg = document.getElementById('lightbox-img');
-const lightboxInfo = document.getElementById('lightbox-info');
+const lightboxImg = document.getElementById('lightbox-image');
+const lightboxCaption = document.getElementById('lightbox-caption');
 const lightboxClose = document.querySelector('.lightbox-close');
 
 let currentImageIndex = 0;
 let currentImages = [];
 
-function openLightbox(imageSrc, info, images = []) {
+function openLightbox(imageSrc, caption, images = []) {
+  if (!lightbox || !lightboxImg) return;
+  
   lightboxImg.src = imageSrc;
-  lightboxInfo.textContent = info;
+  if (lightboxCaption) {
+    lightboxCaption.textContent = caption || '';
+  }
   lightbox.classList.add('active');
   document.body.style.overflow = 'hidden';
   
@@ -122,6 +149,8 @@ function openLightbox(imageSrc, info, images = []) {
 }
 
 function closeLightbox() {
+  if (!lightbox) return;
+  
   lightbox.classList.remove('active');
   document.body.style.overflow = '';
 }
@@ -132,7 +161,7 @@ if (lightboxClose) {
 
 if (lightbox) {
   lightbox.addEventListener('click', (e) => {
-    if (e.target === lightbox) {
+    if (e.target === lightbox || e.target.classList.contains('lightbox-overlay')) {
       closeLightbox();
     }
   });
@@ -140,7 +169,7 @@ if (lightbox) {
 
 // 键盘导航
 document.addEventListener('keydown', (e) => {
-  if (!lightbox.classList.contains('active')) return;
+  if (!lightbox || !lightbox.classList.contains('active')) return;
   
   if (e.key === 'Escape') {
     closeLightbox();
@@ -152,17 +181,30 @@ document.addEventListener('keydown', (e) => {
 });
 
 function navigateLightbox(direction) {
-  if (currentImages.length === 0) return;
+  if (currentImages.length === 0 || !lightboxImg) return;
   
   currentImageIndex = (currentImageIndex + direction + currentImages.length) % currentImages.length;
   const newImage = currentImages[currentImageIndex];
   lightboxImg.src = newImage.src;
-  lightboxInfo.textContent = newImage.info || '';
+  if (lightboxCaption) {
+    lightboxCaption.textContent = newImage.caption || '';
+  }
 }
 
 // 上一张/下一张按钮
-document.querySelector('.lightbox-nav.prev')?.addEventListener('click', () => navigateLightbox(-1));
-document.querySelector('.lightbox-nav.next')?.addEventListener('click', () => navigateLightbox(1));
+const prevBtn = document.querySelector('.lightbox-prev');
+const nextBtn = document.querySelector('.lightbox-next');
+
+if (prevBtn) {
+  prevBtn.addEventListener('click', () => navigateLightbox(-1));
+}
+
+if (nextBtn) {
+  nextBtn.addEventListener('click', () => navigateLightbox(1));
+}
+
+// ========== BLOCK: Lightbox Functionality END ==========
+
 // ========== 自定义鼠标 ==========
 const cursor = document.querySelector('.custom-cursor');
 
@@ -173,7 +215,8 @@ if (cursor) {
   });
 
   // 鼠标悬停效果
-  document.querySelectorAll('a, button, .nav-link, .character-card, .vinyl-record').forEach(el => {
+  const interactiveElements = document.querySelectorAll('a, button, .nav-link, .character-card, .vinyl-record');
+  interactiveElements.forEach(el => {
     el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
     el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
   });
@@ -184,8 +227,8 @@ document.addEventListener('openingComplete', () => {
   if (cursor) {
     cursor.style.display = 'block';
   }
-  document.body.style.cursor = 'none';
+  // 可选：隐藏默认鼠标
+  // document.body.style.cursor = 'none';
 });
 
 
-// ========== BLOCK: Lightbox Functionality END ==========
