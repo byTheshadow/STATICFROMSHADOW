@@ -60,15 +60,57 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => elements.flash.classList.remove('active'), 500);
   }, 4000));
 
-  // ⏱️ 3. 显示 wait, really?..... (5.5s)
+   // ⏱️ 3. 老旧电视机开机，显示恐怖消息 (5.5s)
   timeline.push(setTimeout(() => {
     elements.text404.style.opacity = '0';
     setTimeout(() => {
       elements.text404.classList.add('hidden');
+      
+      // 电视机开机
       elements.textWait.classList.remove('hidden');
-      elements.textWait.style.opacity = '1';
+      elements.textWait.classList.add('power-on');
+      
+      // 第一条消息："wait"
+      setTimeout(() => {
+        const msgWait = document.getElementById('msg-wait');
+        msgWait.classList.add('show');
+        
+        // 添加电视机抖动
+        elements.textWait.classList.add('glitch');
+        setTimeout(() => elements.textWait.classList.remove('glitch'), 300);
+      }, 800);
+      
+      // 第二条消息："really?" (延迟1秒出现)
+      setTimeout(() => {
+        const msgReally = document.getElementById('msg-really');
+        msgReally.classList.add('show');
+        
+        // 再次抖动
+        elements.textWait.classList.add('glitch');
+        setTimeout(() => elements.textWait.classList.remove('glitch'), 300);
+      }, 1800);
+      
     }, 300);
   }, 5500));
+
+  // ⏱️ 4. 幽灵转身，显示 WELCOME TO SHADOW'S PLACE!! (8s - 延长0.5秒给消息更多展示时间)
+  timeline.push(setTimeout(() => {
+    elements.textWait.style.opacity = '0';
+    setTimeout(() => {
+      elements.textWait.classList.add('hidden');
+      
+      // 幽灵重新出现并转身
+      elements.ghost.classList.remove('hidden', 'moving');
+      elements.ghost.style.left = '50%';
+      elements.ghost.style.top = '50%';
+      elements.ghost.classList.add('turn-around');
+      
+      // 显示欢迎文字
+      elements.textWelcome.classList.remove('hidden');
+      elements.textWelcome.style.opacity = '1';
+    }, 300);
+  }, 8000));
+
 
   // ⏱️ 4. 幽灵转身，显示 WELCOME TO SHADOW'S PLACE!! (7s)
   timeline.push(setTimeout(() => {
